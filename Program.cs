@@ -5,7 +5,6 @@ using DevDiary.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Common;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
