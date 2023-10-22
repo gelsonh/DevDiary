@@ -1,0 +1,136 @@
+﻿@model DevDiary.Models.BlogPost
+@using DevDiary.Enums;
+@using DevDiary.Services.Interfaces;
+@inject IImageService _ImageService
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+
+    #Content {
+        height: 200px; /* Puedes ajustar la altura según tus preferencias */
+    }
+
+</style>
+
+<div class="container mt-5">
+
+
+    <div class="row">
+        <div class="col-12">
+            <!-- ----------------------------------------- -->
+            <!-- 1. Basic Form -->
+            <!-- ----------------------------------------- -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-3 pb-3 border-bottom">Edit</h4>
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="Created" />
+                        <input type="hidden" asp-for="Slug" />
+                        <input type="hidden" asp-for="ImageData" />
+                        <input type="hidden" asp-for="ImageType" />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Title" type="text" class="form-control" id="tb-fname" placeholder="Enter Name here" />
+                                    <label asp-for="Title" for="tb-fname">Title</label>
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Abstract" type="text" class="form-control" id="tb-abstract" placeholder="Enter Abstract here" />
+                                    <label asp-for="Abstract" for="tb-abstract">Abstract</label>
+                                    <span asp-validation-for="Abstract" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <textarea asp-for="Content" class="editor form-control" id="Content"></textarea>
+                                    <label asp-for="Content" for="Content">Content</label>
+                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label asp-for="CategoryId" class="control-label">Category</label>
+                                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <div class="square-img-container">
+                                    <img id="contactImage" class="square-img" src="@(Model.ImageData != null ? _ImageService.ConvertByteArrayToFile(Model.ImageData, Model.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" alt="" />
+                                </div>
+                                <div>
+                                    <input asp-for="ImageFile" class="form-control" accept=".png,.jpg,.jpeg,.gif" onchange="document.getElementById('contactImage').src = window.URL.createObjectURL(this.files[0])" />
+                                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-2 col-lg-2">
+                                    <div class="form-group form-check d-flex align-items-center">
+                                        <label class="form-check-label me-2" style="font-size: 14px;">
+                                            <input class="form-check-input" asp-for="IsPublished" style="transform: scale(0.5);" /> @Html.DisplayNameFor(model => model.IsPublished)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-2 col-lg-2">
+                                    <div class="form-group form-check d-flex align-items-center">
+                                        <label class="form-check-label me-2" style="font-size: 14px;">
+                                            <input class="form-check-input" asp-for="IsDeleted" style="transform: scale(0.5);" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        <script>
+            ClassicEditor
+                .create(document.querySelector('.editor'), {
+                    licenseKey: '',
+                    // Configura el formato para que sea div en lugar de p
+                    editorconfig: {
+                        enterMode: 2, // Establece el modo de entrada en div
+                        shiftEnterMode: 2 // Establece el modo de entrada con Shift en div
+                    }
+                })
+                .then(editor => {
+                    window.editor = editor;
+                });
+        </script>
+    }
+</div>
+
+
+
+
