@@ -80,7 +80,8 @@ namespace DevDiary.Services
                                                                           .Include(b => b.Comments)
                                                                           .ThenInclude(c => c.Author)
                                                                           .Include(b => b.Tags)
-                                                                       
+                                                                          .Where(b => b.IsPublished)  
+
                                                                           .ToListAsync();
                 return blogPosts;
             }
