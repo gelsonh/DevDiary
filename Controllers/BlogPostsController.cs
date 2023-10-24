@@ -40,12 +40,15 @@ namespace DevDiary.Controllers
             int pageSize = 3;
             int page = pageNum ?? 1;
 
-            IPagedList<BlogPost> blogPosts = await (await _blogService.GetAllBlogPostAsync())
-                .OrderByDescending(b => b.Created) // Ordenar por fecha de creación
-                .ToPagedListAsync(page, pageSize);
+            // Obtén todos los blogs sin aplicar un filtro por estado de publicación
+            var allBlogPosts = await _blogService.GetAllBlogPostAsync();
+            var orderedBlogPosts = allBlogPosts.OrderByDescending(b => b.Created); // Ordenar por fecha de creación
+
+            IPagedList<BlogPost> blogPosts = await orderedBlogPosts.ToPagedListAsync(page, pageSize);
 
             return View(blogPosts);
         }
+
 
 
         // GET: BlogPosts
@@ -57,6 +60,10 @@ namespace DevDiary.Controllers
 
             // Recupera los Blog Posts ordenados por fecha de creación descendente (los más recientes primero)
             var blogPosts = await _blogService.GetBlogPostAsync();
+
+            // Aplica un filtro para excluir los blogs eliminados
+            blogPosts = blogPosts.Where(post => !post.IsDeleted);
+
             blogPosts = blogPosts.OrderByDescending(post => post.Created);
 
             // Pagina los resultados
@@ -66,6 +73,7 @@ namespace DevDiary.Controllers
 
             return View(pagedBlogPosts);
         }
+
 
 
         public async Task<IActionResult> SearchIndex(string? searchString, int? pageNum)

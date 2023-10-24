@@ -80,6 +80,7 @@ namespace DevDiary.Services
                                                                           .Include(b => b.Comments)
                                                                           .ThenInclude(c => c.Author)
                                                                           .Include(b => b.Tags)
+                                                                       
                                                                           .ToListAsync();
                 return blogPosts;
             }
@@ -93,20 +94,22 @@ namespace DevDiary.Services
         {
             try
             {
-                IEnumerable<BlogPost> blogPosts = await _context.BlogPosts.Include(b => b.Category)
-                                                                          .Include(b => b.Comments)
-                                                                          .ThenInclude(c => c.Author)
-                                                                          .Include(b => b.Tags)
-                                                                          .OrderByDescending(b => b.Created)
-                                                                          .ToListAsync();
+                IEnumerable<BlogPost> blogPosts = await _context.BlogPosts
+                    .Include(b => b.Category)
+                    .Include(b => b.Comments)
+                    .ThenInclude(c => c.Author)
+                    .Include(b => b.Tags)
+                    .OrderByDescending(b => b.Created)
+                    .ToListAsync();
+
                 return blogPosts;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
+
         public async Task UpdateBlogPostAsync(BlogPost? blogPost)
         {
             if (blogPost == null) { return; }

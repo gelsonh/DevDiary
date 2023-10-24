@@ -69,14 +69,13 @@
                 <div class="col-lg-4 col-xl-4">
                     <div class="content-block post-list-view mt--30 h-100">
                         <div class="post-content d-flex flex-column gap-3 align-items-center">
-                            @if (blogPost.IsPublished == false)
+                            @if (!blogPost.IsPublished)
                             {
                                 <a class="w-75 btn btn-outline-success"
                                    asp-action="Publish"
                                    asp-controller="BlogPosts"
                                    asp-route-id="@blogPost.Id">
                                     Publish
-
                                 </a>
                             }
                             else
@@ -84,7 +83,9 @@
                                 <a class="w-75 btn btn-outline-success"
                                    asp-action="Unpublish"
                                    asp-controller="BlogPosts"
-                                   asp-route-id="@blogPost.Id">Unpublish</a>
+                                   asp-route-id="@blogPost.Id">
+                                    Unpublish
+                                </a>
                             }
 
                             <a class="w-75 btn btn-outline-warning"
@@ -94,24 +95,28 @@
                                 Edit
                             </a>
 
-                            @if (blogPost.IsDeleted == false)
+                            @if (!blogPost.IsDeleted)
                             {
                                 <a class="w-75 btn btn-outline-danger"
                                    asp-action="Delete"
                                    asp-controller="BlogPosts"
-                                   asp-route-id="@blogPost.Id">Delete</a>
+                                   asp-route-id="@blogPost.Id">
+                                    Delete
+                                </a>
                             }
                             else
                             {
                                 <a class="w-75 btn btn-outline-danger"
                                    asp-action="Undelete"
                                    asp-controller="BlogPosts"
-                                   asp-route-id="@blogPost.Id">Undelete</a>
+                                   asp-route-id="@blogPost.Id">
+                                    Undelete
+                                </a>
                             }
-
                         </div>
                     </div>
                 </div>
+
             </div>
 
         }
