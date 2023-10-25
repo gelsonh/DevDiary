@@ -18,11 +18,13 @@ namespace DevDiary.Controllers.API
     {
         private readonly ApplicationDbContext _context;
         private readonly IBlogService _blogService;
+   
 
         public BlogPostsController(ApplicationDbContext context, IBlogService blogService)
         {
             _context = context;
             _blogService = blogService;
+ 
         }
 
 
@@ -42,6 +44,7 @@ namespace DevDiary.Controllers.API
         }
 
 
+     
 
 
         // GET: api/BlogPosts
@@ -56,6 +59,8 @@ namespace DevDiary.Controllers.API
         }
 
         // GET: api/BlogPosts/5
+
+
         [HttpGet("{id}")]
         public async Task<ActionResult<BlogPost>> GetBlogPost(int id)
         {
@@ -103,6 +108,7 @@ namespace DevDiary.Controllers.API
 
             return NoContent();
         }
+
 
         // POST: api/BlogPosts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

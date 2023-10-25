@@ -70,6 +70,9 @@ namespace DevDiary.Controllers
         }
 
 
+        
+
+
 
         public async Task<IActionResult> SearchIndex(string? searchString, int? pageNum)
         {
@@ -160,8 +163,6 @@ namespace DevDiary.Controllers
 
 
         // POST: BlogPosts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
