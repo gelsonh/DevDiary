@@ -86,8 +86,8 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "PublicAPI v1");
-    //c.InjectStylesheet("/css/swagger.css");
-    //c.InjectJavascript("/js/swagger.js");
+    c.InjectStylesheet("/css/swagger.css");
+    c.InjectJavascript("/js/swagger.js");
 
     c.DocumentTitle = "Dev Diary Documentation";
 });
