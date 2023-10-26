@@ -14,7 +14,7 @@ var connectionString = DataUtility.GetConnectionString(builder.Configuration) ??
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString, o => o.MigrationsHistoryTable(tableName: "BlogMigrationHistory", schema: "blogs")));
+    options.UseNpgsql(connectionString, o => o.MigrationsHistoryTable(tableName: "BlogMigrationHistory", schema: "blog")));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
