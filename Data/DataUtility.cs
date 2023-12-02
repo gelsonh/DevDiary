@@ -11,24 +11,13 @@ namespace DevDiary.Data
         private const string? _adminRole = "Admin";
         private const string? _moderatorRole = "Moderator";
 
-        public static string GetConnectionString()
+        public static string GetConnectionString(IConfiguration configuration)
         {
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            var databasePrivateUrl = Environment.GetEnvironmentVariable("DATABASE_PRIVATE_URL");
-
-            if (!string.IsNullOrEmpty(databaseUrl))
-            {
-                return BuildConnectionString(databaseUrl);
-            }
-            else if (!string.IsNullOrEmpty(databasePrivateUrl))
-            {
-                return BuildConnectionString(databasePrivateUrl);
-            }
-            else
-            {
-                throw new InvalidOperationException("Connection string not found. Check your environment variables.");
-            }
+            return string.IsNullOrEmpty(databaseUrl) ? connectionString! : BuildConnectionString(databaseUrl);
         }
+
 
         private static string BuildConnectionString(string databaseUrl)
         {
