@@ -143,6 +143,13 @@ namespace DevDiary.Controllers
                 return NotFound();
             }
 
+            // Agrega este código para manejar la imagen
+            if (blogPost.ImageData != null && blogPost.ImageType != null)
+            {
+                blogPost.ImageFileString = $"data:{blogPost.ImageType};base64,{Convert.ToBase64String(blogPost.ImageData)}";
+            }
+
+
             return View(blogPost);
         }
 
