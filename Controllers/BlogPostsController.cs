@@ -69,11 +69,6 @@ namespace DevDiary.Controllers
             return View(pagedBlogPosts);
         }
 
-
-        
-
-
-
         public async Task<IActionResult> SearchIndex(string? searchString, int? pageNum)
         {
             int pageSize = 3;
