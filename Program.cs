@@ -95,7 +95,7 @@ app.UseSwaggerUI(c =>
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-
+app.UseStaticFiles();
 app.UseRouting();
 
 
