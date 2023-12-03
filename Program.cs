@@ -66,7 +66,7 @@ builder.Services.AddCors(cors =>
 
 var app = builder.Build();
 
-app.UseCors("DefaultPolicy");
+
 
 var scope = app.Services.CreateScope();
 await DataUtility.ManageDataAsync(scope.ServiceProvider);
@@ -97,6 +97,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors("DefaultPolicy");
 
 app.UseAuthorization();
 
