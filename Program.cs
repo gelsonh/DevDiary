@@ -63,11 +63,9 @@ builder.Services.AddCors(cors =>
                                                       .AllowAnyHeader());
 });
 
-
-
 var app = builder.Build();
 
-
+app.UseCors("DefaultPolicy");
 
 var scope = app.Services.CreateScope();
 await DataUtility.ManageDataAsync(scope.ServiceProvider);
@@ -97,7 +95,7 @@ app.UseSwaggerUI(c =>
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseCors("DefaultPolicy");
+
 app.UseRouting();
 
 
