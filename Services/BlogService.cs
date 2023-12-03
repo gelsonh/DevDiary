@@ -79,10 +79,19 @@ namespace DevDiary.Services
                 IEnumerable<BlogPost> blogPosts = await _context.BlogPosts.Include(b => b.Category)
                                                                           .Include(b => b.Comments)
                                                                           .ThenInclude(c => c.Author)
-                                                                          .Include(b => b.Tags)
+                                                                          .Include(b => b.Tags)                                                                       
                                                                           .Where(b => b.IsPublished)  
 
                                                                           .ToListAsync();
+
+
+                foreach (var blogPost in blogPosts)
+                {
+                    if (blogPost.ImageData != null && blogPost.ImageType != null)
+                    {
+                        blogPost.ImageFileString = $"data:{blogPost.ImageType};base64,{Convert.ToBase64String(blogPost.ImageData)}";
+                    }
+                }
                 return blogPosts;
             }
             catch (Exception)
