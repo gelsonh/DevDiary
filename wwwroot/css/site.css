@@ -26,33 +26,38 @@ body {
     list-style: none;
 }
 
+/* Estilos base para ambos modos */
 .my-page-link {
     display: block;
     width: 40px;
     height: 40px;
     line-height: 40px;
-    background-color: #fff;
     text-align: center;
     text-decoration: none;
-    color: #252525;
     border-radius: 4px;
     margin: 5px;
     box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
 }
 
-.my-page-item a.my-page-link:hover, a.my-page-link:active {
+.my-page-item a.my-page-link:hover,
+a.my-page-link:active {
     color: #fff;
     background-color: #ff993b;
 }
 
-.my-page-item my-page-link li:first-child a {
-    border-radius: 40px 0 0 40px;
+/* Estilos para el modo oscuro */
+.my-page-item.dark a.my-page-link {
+    background-color: #000000; /* Color negro para el modo oscuro */
 }
 
-.my-page-item my-page-link li:last-child a {
-    border-radius: 0 40px 40px 0;
-}
+    .my-page-item.dark a.my-page-link:hover,
+    .my-page-item.dark a.my-page-link:active {
+        background-color: #ff993b;
+        /* Puedes ajustar otros estilos adicionales para el modo oscuro aquí si es necesario */
+    }
+
+
 
 .tagcloud > .disabledTag {
     background-color: lightgray;

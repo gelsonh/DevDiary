@@ -69,8 +69,8 @@
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12">
                         <div class="logo">
                             <a href="~/BlogPosts/Index">
-                                <img class="dark-logo" src="~/assets/images/logo/DevDiary_Black.png" alt="Blogar logo" style="transform: scale(2);">
-                                <img class="light-logo" src="~/assets/images/logo/DevDiary_White.png" alt="Blogar logo" style="transform: scale(2);">
+                                <img class="dark-logo" src="~/assets/images/logo/DDLogo.png" alt="Blogar logo" style="transform: scale(2);">
+                                <img class="light-logo" src="~/assets/images/logo/DDLogo.png" alt="Blogar logo" style="transform: scale(2);">
                             </a>
                         </div>
                     </div>
@@ -230,8 +230,8 @@
                 <div class="mobile-menu-top">
                     <div class="logo">
                         <a href="~/BlogPosts/Index">
-                            <img class="dark-logo" src="~/assets/images/logo/DevDiary_Black.png" alt="Blogar logo" style="transform: scale(2);">
-                            <img class="light-logo" src="~/assets/images/logo/DevDiary_White.png" alt="Blogar logo" style="transform: scale(2);">
+                            <img class="dark-logo" src="~/assets/images/logo/DDLogo.png" alt="Blogar logo" style="transform: scale(2);">
+                            <img class="light-logo" src="~/assets/images/logo/DDLogo.png" alt="Blogar logo" style="transform: scale(2);">
                         </a>
                     </div>
                     <div class="mobile-close">
@@ -418,24 +418,25 @@
             }
         </script>
         <!--End Sweet Alerts-->
-        <!--CK Editor-->
+        <!-- CK Editor -->
         <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
 
         <script>
-            ClassicEditor
-                .create(document.querySelector('.editor'), {
-                    licenseKey: '',
-
-                    editorconfig: {
-                        enterMode: 2,
-                        shiftEnterMode: 2
-                    }
-                })
-                .then(editor => {
-                    window.editor = editor;
-                });
+            document.addEventListener('DOMContentLoaded', function () {
+                ClassicEditor
+                    .create(document.querySelector('.editor'), {
+                        licenseKey: '',
+                        editorconfig: {
+                            enterMode: 2,
+                            shiftEnterMode: 2
+                        }
+                    })
+                    .then(editor => {
+                        window.editor = editor;
+                    });
+            });
         </script>
-        <!--End CK Editor-->
+        <!-- Fin de CK Editor -->
     }
 
 

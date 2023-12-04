@@ -50,8 +50,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-floating mb-3">
-                                    <textarea asp-for="Content" class="editor form-control" id="Content"></textarea>
-                                    <label asp-for="Content" for="Content">Content</label>
+                                    <label asp-for="Content" class="control-label"></label>
+                                    <textarea asp-for="Content" class="editor form-control"></textarea>
                                     <span asp-validation-for="Content" class="text-danger"></span>
                                 </div>
                             </div>
@@ -113,20 +113,40 @@
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
 
         <script>
-            ClassicEditor
-                .create(document.querySelector('.editor'), {
-                    licenseKey: '',
-                    // Configura el formato para que sea div en lugar de p
-                    editorconfig: {
-                        enterMode: 2, // Establece el modo de entrada en div
-                        shiftEnterMode: 2 // Establece el modo de entrada con Shift en div
-                    }
-                })
-                .then(editor => {
-                    window.editor = editor;
-                });
+            document.addEventListener('DOMContentLoaded', function () {
+                const editorTextArea = document.querySelector('.editor');
+
+                // Muestra el textarea antes de inicializar CKEditor
+                editorTextArea.style.display = 'block';
+
+                ClassicEditor
+                    .create(editorTextArea, {
+                        licenseKey: '',
+                        editorconfig: {
+                            enterMode: 2,
+                            shiftEnterMode: 2
+                        }
+                    })
+                    .then(editor => {
+                        window.editor = editor;
+
+                        // Configura aquí tu adaptador de carga de archivos
+                        editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+                            return new YourUploadAdapter(loader);
+                        };
+
+                        // Opcional: Oculta el textarea después de que CKEditor haya cargado
+                        editorTextArea.style.display = 'none';
+                    });
+            });
+
+
+
         </script>
     }
 </div>

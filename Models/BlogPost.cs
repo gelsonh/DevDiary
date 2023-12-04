@@ -66,7 +66,7 @@ namespace DevDiary.Models
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
 
-        [NotMapped] // Esto indica que la propiedad no se guarda en la base de datos
+        [NotMapped] 
         public string? ImageFileString { get; set; }
 
         public byte[]? ImageData { get; set; }
