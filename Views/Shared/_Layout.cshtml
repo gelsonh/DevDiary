@@ -31,20 +31,13 @@
             bottom: 0;
             width: 100%;
             text-align: center;
-     
         }
-
-        .my_switcher ul li a {
-            font-size: 12px;
-            padding: 5px 10px;
-        }
-
     </style>
 </head>
 <body>
     <partial name="_LogoutPartial" />
     <div class="main-wrapper">
-       @*  <div class="mouse-cursor cursor-outer"></div>
+        @*  <div class="mouse-cursor cursor-outer"></div>
         <div class="mouse-cursor cursor-inner"></div> *@
 
         <div id="my_switcher" class="my_switcher">
@@ -69,8 +62,8 @@
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12">
                         <div class="logo">
                             <a href="~/BlogPosts/Index">
-                                <img class="dark-logo" src="~/assets/images/logo/DDLogo.png" alt="Blogar logo" style="transform: scale(2);">
-                                <img class="light-logo" src="~/assets/images/logo/DDLogo.png" alt="Blogar logo" style="transform: scale(2);">
+                                <img class="dark-logo" src="~/assets/images/logo/DevDiary.png" alt="Blogar logo" style="transform: scale(3);">
+                                <img class="light-logo" src="~/assets/images/logo/DevDiaryBlackMode.png" alt="Blogar logo" style="transform: scale(3);">
                             </a>
                         </div>
                     </div>
@@ -165,6 +158,8 @@
                             </nav>
                         </div>
                     </div>
+
+
                     <div class="col-xl-3 col-lg-8 col-md-8 col-sm-9 col-12">
                         <div class="header-search text-end d-flex align-items-center">
                             <form asp-action="SearchIndex" asp-controller="BlogPosts" class="header-search-form d-sm-block d-none">
@@ -182,6 +177,9 @@
                                     </div>
                                 </form>
                             </div>
+
+
+
                             <ul class="metabar-block">
                                 <li class="nav-item dropdown has-arrow main-drop">
                                     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
@@ -223,7 +221,6 @@
             </div>
         </header>
         <!-- Start Header -->
-      
         <!-- Start Mobile Menu Area  -->
         <div class="popup-mobilemenu-area">
             <div class="inner">
@@ -336,7 +333,7 @@
 
         <!-- Start Footer Area  -->
         <div class="axil-footer-area axil-footer-style-1 bg-color-grey">
-          
+
             <!-- Start Copyright Area  -->
             <div class="copyright-area  ">
                 <div class="container">
@@ -394,7 +391,7 @@
         });
     </script>
 
-    @section scripts{
+    @section scripts {
 
         <!--Sweet Alerts-->
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
