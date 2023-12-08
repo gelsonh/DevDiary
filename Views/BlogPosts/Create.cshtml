@@ -94,7 +94,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <!--CK Editor-->
-    <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 
     <script>
         class MyUploadAdapter {
@@ -110,14 +110,13 @@
 
                         const xhr = new XMLHttpRequest();
                         xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
-                        // ... (tu código existente)
 
                         xhr.onload = () => {
                             if (xhr.status === 200) {
                                 try {
                                     // Verificar si la respuesta es JSON antes de intentar parsear
                                     const contentType = xhr.getResponseHeader('Content-Type');
-                                    console.log('Respuesta del servidor:', xhr.responseText); // Agrega esta línea para imprimir la respuesta
+                                    console.log('Respuesta del servidor:', xhr.responseText);
                                     if (contentType && contentType.indexOf('application/json') !== -1) {
                                         const response = JSON.parse(xhr.responseText);
                                         const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
@@ -134,7 +133,6 @@
                                 reject('No se pudo cargar la imagen');
                             }
                         };
-                        // ...
 
                         xhr.onerror = () => {
                             reject('Error al cargar la imagen');
@@ -145,6 +143,8 @@
 
             // Otros métodos necesarios...
         }
+
+        // Resto del código...
 
         document.addEventListener('DOMContentLoaded', function () {
             ClassicEditor
@@ -164,6 +164,7 @@
                     };
                 });
         });
+
     </script>
 
 
