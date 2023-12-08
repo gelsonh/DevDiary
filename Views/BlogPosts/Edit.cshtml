@@ -118,7 +118,6 @@
         <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
 
         <script>
-
             class MyUploadAdapter {
                 constructor(loader) {
                     this.loader = loader;
@@ -134,27 +133,26 @@
                             xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
                             xhr.onload = () => {
                                 if (xhr.status === 200) {
-                                    let response;
                                     try {
-                                        // Intenta analizar la respuesta como JSON
-                                        response = JSON.parse(xhr.responseText);
-                                    } catch (e) {
-                                        // Si la respuesta no es JSON, maneja el error aquí
-                                        console.error('La respuesta del servidor no está en formato JSON:', xhr.responseText);
-                                        reject('La respuesta del servidor no está en formato JSON');
-                                        return;
+                                        // Verificar si la respuesta es JSON antes de intentar parsear
+                                        const contentType = xhr.getResponseHeader('Content-Type');
+                                        console.log('Respuesta del servidor:', xhr.responseText); // Agrega esta línea para imprimir la respuesta
+                                        if (contentType && contentType.indexOf('application/json') !== -1) {
+                                            const response = JSON.parse(xhr.responseText);
+                                            const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
+                                            resolve({
+                                                default: imageUrl
+                                            });
+                                        } else {
+                                            reject('La respuesta del servidor no es JSON');
+                                        }
+                                    } catch (error) {
+                                        reject('La respuesta del servidor no es un JSON válido');
                                     }
-
-                                    // Si la respuesta es JSON, continúa con tu lógica aquí
-                                    const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
-                                    resolve({
-                                        default: imageUrl
-                                    });
                                 } else {
                                     reject('No se pudo cargar la imagen');
                                 }
                             };
-
                             xhr.onerror = () => {
                                 reject('Error al cargar la imagen');
                             };
@@ -164,7 +162,6 @@
 
                 // Otros métodos necesarios...
             }
-
 
             document.addEventListener('DOMContentLoaded', function () {
                 ClassicEditor
@@ -185,6 +182,7 @@
                     });
             });
         </script>
+
     }
 </div>
 

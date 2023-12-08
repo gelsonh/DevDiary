@@ -97,7 +97,6 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
 
     <script>
-
         class MyUploadAdapter {
             constructor(loader) {
                 this.loader = loader;
@@ -111,17 +110,32 @@
 
                         const xhr = new XMLHttpRequest();
                         xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
+                        // ... (tu código existente)
+
                         xhr.onload = () => {
                             if (xhr.status === 200) {
-                                const response = JSON.parse(xhr.responseText);
-                                const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
-                                resolve({
-                                    default: imageUrl
-                                });
+                                try {
+                                    // Verificar si la respuesta es JSON antes de intentar parsear
+                                    const contentType = xhr.getResponseHeader('Content-Type');
+                                    console.log('Respuesta del servidor:', xhr.responseText); // Agrega esta línea para imprimir la respuesta
+                                    if (contentType && contentType.indexOf('application/json') !== -1) {
+                                        const response = JSON.parse(xhr.responseText);
+                                        const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
+                                        resolve({
+                                            default: imageUrl
+                                        });
+                                    } else {
+                                        reject('La respuesta del servidor no es JSON');
+                                    }
+                                } catch (error) {
+                                    reject('La respuesta del servidor no es un JSON válido');
+                                }
                             } else {
                                 reject('No se pudo cargar la imagen');
                             }
                         };
+                        // ...
+
                         xhr.onerror = () => {
                             reject('Error al cargar la imagen');
                         };
@@ -131,7 +145,6 @@
 
             // Otros métodos necesarios...
         }
-
 
         document.addEventListener('DOMContentLoaded', function () {
             ClassicEditor
@@ -152,6 +165,7 @@
                 });
         });
     </script>
+
 
 
     <script>
