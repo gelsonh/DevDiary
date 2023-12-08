@@ -190,7 +190,7 @@
                                     <div class="row row-md-10">
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label for="editor">Leave a Reply</label>
+                                                <label for="editor"></label>
                                                 <textarea id="editor" class="form-control" name="Body"></textarea>
                                             </div>
                                         </div>
@@ -269,16 +269,19 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <!--CK Editor-->
-    <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'), {
-                licenseKey: '',
-            })
-            .then(editor => {
-                window.editor = editor;
-            });;
+        document.addEventListener('DOMContentLoaded', function () {
+            ClassicEditor
+                .create(document.querySelector('#editor'), {
+                    licenseKey: '',
+                })
+                .then(editor => {
+                    window.editor = editor;
+                });
+        });
     </script>
+
 
     <script type="text/javascript">
 

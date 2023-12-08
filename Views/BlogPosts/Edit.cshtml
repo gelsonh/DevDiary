@@ -2,6 +2,8 @@
 @using DevDiary.Enums;
 @using DevDiary.Services.Interfaces;
 @inject IImageService _ImageService
+@inject IBlogService _BlogService
+
 
 @{
     ViewData["Title"] = "Edit";
@@ -34,25 +36,37 @@
                         <input type="hidden" asp-for="ImageType" />
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-12 col-lg-4">
+                                <div class="square-img-container">
+                                    <img id="contactImage" class="square-img" src="@(Model.ImageData != null ? _ImageService.ConvertByteArrayToFile(Model.ImageData, Model.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" alt="" />
+                                </div>
+                                <div>
+                                    <input asp-for="ImageFile" class="form-control" accept=".png,.jpg,.jpeg,.gif" onchange="document.getElementById('contactImage').src = window.URL.createObjectURL(this.files[0])" />
+                                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
                                 <div class="form-floating mb-3">
+
+                                    <label asp-for="Content" class="control-label"></label>
+                                    <textarea asp-for="Content" class="editor form-control"></textarea>
+                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mt-3">
                                     <input asp-for="Title" type="text" class="form-control" id="tb-fname" placeholder="Enter Name here" />
                                     <label asp-for="Title" for="tb-fname">Title</label>
                                     <span asp-validation-for="Title" class="text-danger"></span>
+
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-8">
                                 <div class="form-floating mb-3">
                                     <input asp-for="Abstract" type="text" class="form-control" id="tb-abstract" placeholder="Enter Abstract here" />
                                     <label asp-for="Abstract" for="tb-abstract">Abstract</label>
                                     <span asp-validation-for="Abstract" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <label asp-for="Content" class="control-label"></label>
-                                    <textarea asp-for="Content" class="editor form-control"></textarea>
-                                    <span asp-validation-for="Content" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -65,15 +79,22 @@
                                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="square-img-container">
-                                    <img id="contactImage" class="square-img" src="@(Model.ImageData != null ? _ImageService.ConvertByteArrayToFile(Model.ImageData, Model.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" alt="" />
-                                </div>
-                                <div>
-                                    <input asp-for="ImageFile" class="form-control" accept=".png,.jpg,.jpeg,.gif" onchange="document.getElementById('contactImage').src = window.URL.createObjectURL(this.files[0])" />
-                                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+
+                            <div class="col-md-4">
+                                <div class="form-group" id="tagContainer">
+                                    <label asp-for="Tags"></label>
+                                    <input class="form-control" type="text" id="tagInput" name="StringTags" autocomplete="off" />
+                                    <div class="tagcloud axil-single-widget mt-2" style="display: none;">
+                                        <!-- tags go here -->
+                                        @foreach (Tag tag in await _BlogService.GetTagsAsync())
+                                        {
+                                            <a role="button">@tag.Name</a>
+                                        }
+                                    </div>
                                 </div>
                             </div>
+
+
 
                             <div class="row">
                                 <div class="col-2 col-lg-2">
@@ -105,91 +126,93 @@
         </div>
     </div>
 
-
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
-    @section Scripts {
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 
-        <script>
-            class MyUploadAdapter {
-                constructor(loader) {
-                    this.loader = loader;
-                }
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-                upload() {
-                    return this.loader.file
-                        .then(file => new Promise((resolve, reject) => {
-                            const data = new FormData();
-                            data.append('upload', file);
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 
-                            const xhr = new XMLHttpRequest();
-                            xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
-
-                            xhr.onload = () => {
-                                if (xhr.status === 200) {
-                                    try {
-                                        // Verificar si la respuesta es JSON antes de intentar parsear
-                                        const contentType = xhr.getResponseHeader('Content-Type');
-                                        console.log('Respuesta del servidor:', xhr.responseText);
-                                        if (contentType && contentType.indexOf('application/json') !== -1) {
-                                            const response = JSON.parse(xhr.responseText);
-                                            const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
-                                            resolve({
-                                                default: imageUrl
-                                            });
-                                        } else {
-                                            reject('La respuesta del servidor no es JSON');
-                                        }
-                                    } catch (error) {
-                                        reject('La respuesta del servidor no es un JSON válido');
-                                    }
-                                } else {
-                                    reject('No se pudo cargar la imagen');
-                                }
-                            };
-
-                            xhr.onerror = () => {
-                                reject('Error al cargar la imagen');
-                            };
-                            xhr.send(data);
-                        }));
-                }
-
-                // Otros métodos necesarios...
+    <script>
+        class MyUploadAdapter {
+            constructor(loader) {
+                this.loader = loader;
             }
 
-            // Resto del código...
+            upload() {
+                return this.loader.file
+                    .then(file => new Promise((resolve, reject) => {
+                        const data = new FormData();
+                        data.append('upload', file);
 
-            document.addEventListener('DOMContentLoaded', function () {
-                ClassicEditor
-                    .create(document.querySelector('.editor'), {
-                        licenseKey: '',
-                        editorconfig: {
-                            enterMode: 2,
-                            shiftEnterMode: 2
-                        }
-                    })
-                    .then(editor => {
-                        window.editor = editor;
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
 
-                        // Configura MyUploadAdapter como el adaptador de carga
-                        editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
-                            return new MyUploadAdapter(loader);
+                        xhr.onload = () => {
+                            if (xhr.status === 200) {
+                                try {
+                                    // Verificar si la respuesta es JSON antes de intentar parsear
+                                    const contentType = xhr.getResponseHeader('Content-Type');
+                                    console.log('Respuesta del servidor:', xhr.responseText);
+                                    if (contentType && contentType.indexOf('application/json') !== -1) {
+                                        const response = JSON.parse(xhr.responseText);
+                                        const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
+                                        resolve({
+                                            default: imageUrl
+                                        });
+                                    } else {
+                                        reject('La respuesta del servidor no es JSON');
+                                    }
+                                } catch (error) {
+                                    reject('La respuesta del servidor no es un JSON válido');
+                                }
+                            } else {
+                                reject('No se pudo cargar la imagen');
+                            }
                         };
-                    });
-            });
 
-        </script>
+                        xhr.onerror = () => {
+                            reject('Error al cargar la imagen');
+                        };
+                        xhr.send(data);
+                    }));
+            }
 
-    }
-</div>
+            // Otros métodos necesarios...
+        }
+
+        // Resto del código...
+
+        document.addEventListener('DOMContentLoaded', function () {
+            ClassicEditor
+                .create(document.querySelector('.editor'), {
+                    licenseKey: '',
+                    editorconfig: {
+                        enterMode: 2,
+                        shiftEnterMode: 2
+                    }
+                })
+                .then(editor => {
+                    window.editor = editor;
+
+                    // Configura MyUploadAdapter como el adaptador de carga
+                    editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+                        return new MyUploadAdapter(loader);
+                    };
+                });
+        });
+
+    </script>
+
+}
+
 
 
 
