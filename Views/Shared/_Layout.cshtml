@@ -25,7 +25,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon"
           href="~/favicon.ico"
-          type="image/x-icon" />
+          type="image/x-icon" >
 
           
     <style>
@@ -422,6 +422,42 @@
         <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
 
         <script>
+
+            class MyUploadAdapter {
+                constructor(loader) {
+                    this.loader = loader;
+                }
+
+                upload() {
+                    return this.loader.file
+                        .then(file => new Promise((resolve, reject) => {
+                            const data = new FormData();
+                            data.append('upload', file);
+
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
+                            xhr.onload = () => {
+                                if (xhr.status === 200) {
+                                    const response = JSON.parse(xhr.responseText);
+                                    const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
+                                    resolve({
+                                        default: imageUrl
+                                    });
+                                } else {
+                                    reject('No se pudo cargar la imagen');
+                                }
+                            };
+                            xhr.onerror = () => {
+                                reject('Error al cargar la imagen');
+                            };
+                            xhr.send(data);
+                        }));
+                }
+
+                // Otros métodos necesarios...
+            }
+
+
             document.addEventListener('DOMContentLoaded', function () {
                 ClassicEditor
                     .create(document.querySelector('.editor'), {
@@ -433,6 +469,11 @@
                     })
                     .then(editor => {
                         window.editor = editor;
+
+                        // Configura MyUploadAdapter como el adaptador de carga
+                        editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+                            return new MyUploadAdapter(loader);
+                        };
                     });
             });
         </script>

@@ -118,14 +118,57 @@
         <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
 
         <script>
+
+            class MyUploadAdapter {
+                constructor(loader) {
+                    this.loader = loader;
+                }
+
+                upload() {
+                    return this.loader.file
+                        .then(file => new Promise((resolve, reject) => {
+                            const data = new FormData();
+                            data.append('upload', file);
+
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
+                            xhr.onload = () => {
+                                if (xhr.status === 200) {
+                                    let response;
+                                    try {
+                                        // Intenta analizar la respuesta como JSON
+                                        response = JSON.parse(xhr.responseText);
+                                    } catch (e) {
+                                        // Si la respuesta no es JSON, maneja el error aquí
+                                        console.error('La respuesta del servidor no está en formato JSON:', xhr.responseText);
+                                        reject('La respuesta del servidor no está en formato JSON');
+                                        return;
+                                    }
+
+                                    // Si la respuesta es JSON, continúa con tu lógica aquí
+                                    const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
+                                    resolve({
+                                        default: imageUrl
+                                    });
+                                } else {
+                                    reject('No se pudo cargar la imagen');
+                                }
+                            };
+
+                            xhr.onerror = () => {
+                                reject('Error al cargar la imagen');
+                            };
+                            xhr.send(data);
+                        }));
+                }
+
+                // Otros métodos necesarios...
+            }
+
+
             document.addEventListener('DOMContentLoaded', function () {
-                const editorTextArea = document.querySelector('.editor');
-
-                // Muestra el textarea antes de inicializar CKEditor
-                editorTextArea.style.display = 'block';
-
                 ClassicEditor
-                    .create(editorTextArea, {
+                    .create(document.querySelector('.editor'), {
                         licenseKey: '',
                         editorconfig: {
                             enterMode: 2,
@@ -135,18 +178,12 @@
                     .then(editor => {
                         window.editor = editor;
 
-                        // Configura aquí tu adaptador de carga de archivos
+                        // Configura MyUploadAdapter como el adaptador de carga
                         editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
-                            return new YourUploadAdapter(loader);
+                            return new MyUploadAdapter(loader);
                         };
-
-                        // Opcional: Oculta el textarea después de que CKEditor haya cargado
-                        editorTextArea.style.display = 'none';
                     });
             });
-
-
-
         </script>
     }
 </div>
