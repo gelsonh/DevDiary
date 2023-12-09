@@ -102,20 +102,29 @@
                         @Model.Abstract
                     </p>
                     <figure class="wp-block-image alignwide text-center">
-                        <img src="@(Model.ImageData != null ? _ImageService.ConvertByteArrayToFile(Model.ImageData, Model.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" alt="Show the blog's Image here or a default Image" />
+                        <img src="@(Model.ImageData != null ? _ImageService.ConvertByteArrayToFile(Model.ImageData, Model.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")"
+                             alt="Show the blog's Image here or a default Image"
+                             class="small-image" />
                     </figure>
+
 
 
 
                     @Html.Raw(Model.Content)
 
+
+
+                    <!-- Dentro de la vista Details -->
                     <div class="tagcloud">
                         @foreach (Tag tag in Model.Tags)
                         {
-                            <a href="#">@tag.Name</a>
+                            <a href="#" class="tag">@tag.Name</a>
                         }
-
                     </div>
+
+
+
+
                     <div class="social-share-block">
                         <div class="post-like">
                             <a id="likesButton">
@@ -130,13 +139,13 @@
                                 <span id="numLikes">@Model.Likes.Where(l => l.IsLiked == true).Count() Likes</span>
                             </a>
                         </div>
-                        <ul class="social-icon icon-rounded-transparent md-size">
-                            <li><a href="https://www.facebook.com/gelsonhs"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="https://www.instagram.com/gelsonhz/"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="https://twitter.com/gelsonhz"><i class="fab fa-twitter"></i></a></li>
+                        @*                         <ul class="social-icon icon-rounded-transparent md-size">
+                        <li><a href="https://www.facebook.com/gelsonhs"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://www.instagram.com/gelsonhz/"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="https://twitter.com/gelsonhz"><i class="fab fa-twitter"></i></a></li>
 
-                            <li><a href=""><i class="fab fa-linkedin-in"></i></a></li>
-                        </ul>
+                        <li><a href=""><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul> *@
                     </div>
                     <!-- Start Author  -->
                     <div class="about-author">
@@ -264,23 +273,15 @@
     </div>
 </div>
 <!-- End Post Single Wrapper  -->
-@section scripts{
+@section scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <!--CK Editor-->
+
+    <!-- CK Editor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            ClassicEditor
-                .create(document.querySelector('#editor'), {
-                    licenseKey: '',
-                })
-                .then(editor => {
-                    window.editor = editor;
-                });
-        });
-    </script>
+
+
 
 
     <script type="text/javascript">
@@ -293,7 +294,7 @@
 
         $().ready(function () {
             $('#likesButton').click(function () {
-
+                console.log('Button clicked')
                 // if not logged in SweetAlert!
                 if (userId == '') {
                     Swal.fire({
@@ -311,7 +312,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: '@Url.Action("LikeBlogPost","BlogPosts")',
+                        url: '@Url.Action("LikeBlogPost", "BlogPosts")',
                         data: args,
                         success: function (result) {
                             let data = result.isLiked;

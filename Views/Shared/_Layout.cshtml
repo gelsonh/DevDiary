@@ -242,7 +242,7 @@
                 </div>
                 <!-- Start Mainmanu Nav -->
                 <ul class="mainmenu">
-                    <li class="menu-item-has-children">
+                    <li class="">
                         <a asp-controller="BlogPosts" asp-action="Index">Home</a>
                     </li>
                     <li class="menu-item-has-children">
@@ -358,6 +358,9 @@
 
     </div>
 
+    <!-- Sweet Alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Modernizer JS -->
     <script src="~/assets/js/vendor/modernizr.min.js"></script>
 
@@ -396,8 +399,6 @@
 
     @section scripts {
 
-        <!--Sweet Alerts-->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
             let message = '@(ViewBag.SwalMessage)';
@@ -417,6 +418,7 @@
                 });
             }
         </script>
+
         <!--End Sweet Alerts-->
         <!-- CK Editor -->
         <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>

@@ -58,23 +58,40 @@ a.my-page-link:active {
     }
 
 
+.tagcloud a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-top: 5px;
+    margin: 5px;
+    background-color: lightgray;
+    color: black;
+    text-decoration: none;
+    border: 1px solid gray;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
 
-.tagcloud > .disabledTag {
+    .tagcloud a:hover {
+        background-color: darkgray;
+        color: white;
+    }
+
+.tagcloud .disabledTag {
     background-color: lightgray;
     color: gray;
-    font-weight: bold
-}
-
-.tagcloud > a:hover {
-    color: white !important;
-}
-
-.tagcloud a {
-    color: black;
-}
-
-.tagcloud > .disabledTag:hover {
-    background-color: lightgray;
-    color: darkgray !important;
+    font-weight: bold;
     border-color: lightgray;
+}
+
+    .tagcloud .disabledTag:hover {
+        background-color: lightgray;
+        color: darkgray;
+        border-color: lightgray;
+    }
+
+
+.small-image {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
 }

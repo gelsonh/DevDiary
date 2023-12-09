@@ -9,7 +9,7 @@ namespace DevDiary.Services
 {
     public class ImageService : IImageService
     {
-        private readonly string _defaultImageFilePath = "/img/MicrosoftTeams-image (2).png";
+        private readonly string _defaultImageFilePath = "/img/Default-Image.png";
 
         /// <summary>
         /// Converts a byte array into a base64 image representation.

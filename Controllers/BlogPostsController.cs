@@ -131,12 +131,12 @@ namespace DevDiary.Controllers
                 return NotFound();
             }
 
-            BlogPost? blogPost = await _context.BlogPosts.Include(l => l.Likes)
-                                                         .FirstOrDefaultAsync(bp => bp.Slug == slug);
+            BlogPost? blogPost = await _context.BlogPosts
+                .Include(b => b.Tags)  // Asegúrate de incluir las etiquetas aquí
+                .Include(l => l.Likes)
+                .FirstOrDefaultAsync(bp => bp.Slug == slug);
 
-            //BlogPost? blogPost = await _blogService.GetBlogPostAsync(slug);
-
-
+      
 
             if (blogPost == null)
             {
@@ -148,7 +148,6 @@ namespace DevDiary.Controllers
             {
                 blogPost.ImageFileString = $"data:{blogPost.ImageType};base64,{Convert.ToBase64String(blogPost.ImageData)}";
             }
-
 
             return View(blogPost);
         }
@@ -223,8 +222,9 @@ namespace DevDiary.Controllers
                 return NotFound();
             }
 
-            BlogPost? blogPost = await _context.BlogPosts.Include(bp => bp.Category)
-                                                         .FirstOrDefaultAsync(bp => bp.Id == id);
+            BlogPost? blogPost = await _context.BlogPosts.Include(bp => bp.Tags)  // Incluir las etiquetas
+                                                .Include(bp => bp.Category)
+                                                .FirstOrDefaultAsync(bp => bp.Id == id);
 
             if (blogPost == null)
             {
