@@ -183,7 +183,7 @@
                             <div class="comment-respond">
                                 <h4 class="title">Post a comment</h4>
 
-                                <form asp-action="Create" asp-controller="Comments">
+                                <form asp-action="Create" asp-controller="Comments" method="post">
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <input type="hidden" asp-for="Id" name="BlogPostId" />
                                     <input type="hidden" asp-for="Slug" />

@@ -134,6 +134,7 @@ namespace DevDiary.Controllers
             BlogPost? blogPost = await _context.BlogPosts
                 .Include(b => b.Tags)  // Asegúrate de incluir las etiquetas aquí
                 .Include(l => l.Likes)
+                .Include(c => c.Comments)
                 .FirstOrDefaultAsync(bp => bp.Slug == slug);
 
       
