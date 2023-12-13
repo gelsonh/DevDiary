@@ -115,16 +115,18 @@
     </script>
     <!--End Sweet Alerts-->
     <!--CK Editor-->
-    <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
+  @*   <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 
     <script>
         ClassicEditor
-            .create(document.querySelector('.editor'), {
-                licenseKey: '',
-            })
+            .create(document.querySelector('#editor'))
             .then(editor => {
-                window.editor = editor;
+                // Puedes acceder al editor aquí si es necesario
+                // window.editor = editor;
+            })
+            .catch(error => {
+                console.error(error);
             });
-    </script>
+    </script> *@
     <!--End CK Editor-->
  }

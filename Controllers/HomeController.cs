@@ -58,32 +58,33 @@ namespace DevDiary.Controllers
 
             return View(appUser);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> ContactMe([Bind("FirstName,LastName,Email")] AppUser appUser, string? message)
         {
             string? swalMessage = string.Empty;
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                string? adminEmail = _configuration["AdminLoginEmail"] ?? Environment.GetEnvironmentVariable("AdminLoginEmail");
+
+                if (adminEmail != null)
                 {
-                    string? adminEmail = _configuration["AdminLoginEmail"] ?? Environment.GetEnvironmentVariable("AdminLoginEmail");
-                    await _emailService.SendEmailAsync(adminEmail!, $"Contact Me Message From - {appUser.FullName}", message!);
+                    await _emailService.SendEmailAsync(adminEmail, $"Contact Me Message From - {appUser.FullName}", message!);
                     swalMessage = "Email sent successfully";
-
                 }
-                catch (Exception)
+                else
                 {
-
-                    throw;
+                    swalMessage = "Error: Admin email not configured.";
                 }
-
+            }
+            catch (Exception)
+            {
                 swalMessage = "Error: Unable to send email.";
             }
-            return RedirectToAction("Index", new { swalMessage });
+
+            return RedirectToAction("ContactMe", new { swalMessage });
         }
+
     }
 }
