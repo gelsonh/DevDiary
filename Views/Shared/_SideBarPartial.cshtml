@@ -94,22 +94,15 @@
                         </div>
                         <div class="post-content">
                             <h6 class="title">
-                                <a href="post-details.html">
+                                <a asp-controller="BlogPosts" asp-action="Details" asp-route-slug="@blogPost.Slug">
                                     @blogPost.Title
                                 </a>
                             </h6>
+
                             <div class="post-meta">
                                 <ul class="post-meta-list">
-                                    <li>@blogPost.Created</li>
-                                    @if (blogPost.Likes.Count > 0)
-                                    {
-                                        <li>@blogPost.Likes.Count @((blogPost.Likes.Count == 1) ? "like" : "likes")</li>
-                                    }
-                                    else
-                                    {
-                                        <li>0 likes</li>
-                                    }
-
+                                    <li>@blogPost.Created.ToString("MMM dd, yyyy")</li>
+                                    <li>@blogPost.Likes.Count @((blogPost.Likes.Count == 1) ? "like" : "likes")</li>
 
                                 </ul>
                             </div>
