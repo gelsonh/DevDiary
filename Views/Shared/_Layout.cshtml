@@ -21,13 +21,12 @@
     <link rel="stylesheet" href="~/assets/css/style.css">
     <link rel="stylesheet" href="~/css/site.css">
     <!-- Custom CSS -->
-
     <!-- Favicon -->
     <link rel="shortcut icon"
           href="~/favicon.ico"
-          type="image/x-icon" >
+          type="image/x-icon">
 
-          
+
     <style>
         .axil-footer-area {
             position: absolute;
@@ -83,30 +82,30 @@
                                         <ul class="axil-submenu">
                                             <li>
                                                 <a class="hover-flip-item-wrapper" asp-action="Index" asp-controller="BlogPosts">
-                                                    <span class="">
-                                                        <span>Recent Posts</span>
+                                                    <span class="hover-flip-item">
+                                                        <span data-text="Recent Posts">Recent Posts</span>
                                                     </span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="hover-flip-item-wrapper" asp-action="Popular" asp-controller="BlogPosts">
-                                                    <span class="">
-                                                        <span> Popular Posts</span>
+                                                    <span class="hover-flip-item">
+                                                        <span data-text="Popular Posts"> Popular Posts</span>
                                                     </span>
                                                 </a>
                                             </li>
-
                                         </ul>
-                                    </li>
+
+
                                     <li><a asp-action="ContactMe" asp-controller="Home">Contact</a></li>
-                                    @if (User.Identity?.IsAuthenticated == true)
-                                    {
+                                        @if (User.Identity?.IsAuthenticated == true)
+                                        {
                                         <li><a asp-controller="BlogPosts" asp-action="Favorites">Favorites</a></li>
-                                    }
+                                        }
 
                                     <!-- End Post List Wrapper  -->
-                                    @if (User.IsInRole("Admin"))
-                                    {
+                                        @if (User.IsInRole("Admin"))
+                                        {
                                         <li class="menu-item-has-children">
                                             <a href="#">Author</a>
                                             <ul class="axil-submenu">
@@ -155,7 +154,7 @@
                                             </ul>
                                         </li>
 
-                                    }
+                                        }
                                 </ul>
                                 <!-- End Mainmanu Nav -->
                             </nav>
