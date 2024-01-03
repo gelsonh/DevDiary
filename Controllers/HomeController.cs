@@ -58,6 +58,7 @@ namespace DevDiary.Controllers
 
             return View(appUser);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ContactMe([Bind("FirstName,LastName,Email")] AppUser appUser, string? message)

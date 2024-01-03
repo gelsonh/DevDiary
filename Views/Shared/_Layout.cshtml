@@ -39,8 +39,8 @@
 <body>
     <partial name="_LogoutPartial" />
     <div class="main-wrapper">
-        @*  <div class="mouse-cursor cursor-outer"></div>
-        <div class="mouse-cursor cursor-inner"></div> *@
+        <div class="mouse-cursor cursor-outer"></div>
+        <div class="mouse-cursor cursor-inner"></div>
 
         <div id="my_switcher" class="my_switcher">
             <ul>
@@ -95,17 +95,16 @@
                                                 </a>
                                             </li>
                                         </ul>
-
-
+                                    </li>
                                     <li><a asp-action="ContactMe" asp-controller="Home">Contact</a></li>
-                                        @if (User.Identity?.IsAuthenticated == true)
-                                        {
+                                    @if (User.Identity?.IsAuthenticated == true)
+                                    {
                                         <li><a asp-controller="BlogPosts" asp-action="Favorites">Favorites</a></li>
-                                        }
+                                    }
 
                                     <!-- End Post List Wrapper  -->
-                                        @if (User.IsInRole("Admin"))
-                                        {
+                                    @if (User.IsInRole("Admin"))
+                                    {
                                         <li class="menu-item-has-children">
                                             <a href="#">Author</a>
                                             <ul class="axil-submenu">
@@ -154,7 +153,7 @@
                                             </ul>
                                         </li>
 
-                                        }
+                                    }
                                 </ul>
                                 <!-- End Mainmanu Nav -->
                             </nav>

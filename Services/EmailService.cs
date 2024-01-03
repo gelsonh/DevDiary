@@ -24,6 +24,8 @@ namespace DevDiary.Services
                 var emailPassword = _emailSettings.EmailPassword ?? Environment.GetEnvironmentVariable("EmailPassword");
                 var emailHost = _emailSettings.EmailHost ?? Environment.GetEnvironmentVariable("EmailHost");
                 var emailPort = _emailSettings.EmailPort != 0 ? _emailSettings.EmailPort : int.Parse(Environment.GetEnvironmentVariable("EmailPort")!);
+           
+
                 MimeMessage newEmail = new MimeMessage();
 
                 // Attach the email recipients

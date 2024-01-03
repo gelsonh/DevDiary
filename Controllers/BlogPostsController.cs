@@ -135,6 +135,7 @@ namespace DevDiary.Controllers
                 .Include(b => b.Tags)  // Asegúrate de incluir las etiquetas aquí
                 .Include(l => l.Likes)
                 .Include(c => c.Comments)
+                .Include(bc => bc.Category)
                 .FirstOrDefaultAsync(bp => bp.Slug == slug);
 
       
