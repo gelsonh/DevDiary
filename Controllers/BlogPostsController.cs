@@ -112,7 +112,7 @@ namespace DevDiary.Controllers
 
         public async Task<IActionResult> Favorites(int? pageNum)
         {
-            int pageSize = 3;
+            int pageSize = 10;
             int page = pageNum ?? 1;
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             IEnumerable<BlogPost> likedPosts = await _blogService.GetFavoriteBlogPostsAsync(userId);
