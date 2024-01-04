@@ -44,9 +44,14 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <h6 class="title">
+                                                <h6 class="title" onmouseover="showFullTitle(this)" onmouseout="showTruncatedTitle(this)">
                                                     <a asp-action="Details" asp-controller="BlogPosts" asp-route-slug="@blogPost?.Slug">
-                                                        @(blogPost?.Title?.Length > 40 ? blogPost?.Title?.Substring(0, 40) + "..." : blogPost?.Title)
+                                                        <span class="truncated-title" style="display:block;">
+                                                            @(blogPost?.Title?.Length > 35 ? blogPost?.Title?.Substring(0, 35) + "..." : blogPost?.Title)
+                                                        </span>
+                                                        <span class="full-title" style="display:none;">
+                                                            @blogPost?.Title
+                                                        </span>
                                                     </a>
                                                 </h6>
 
@@ -74,3 +79,14 @@
 <!-- End Tab Area  -->
 
 
+<script>
+    function showFullTitle(element) {
+        element.querySelector('.truncated-title').style.display = 'none';
+        element.querySelector('.full-title').style.display = 'block';
+    }
+
+    function showTruncatedTitle(element) {
+        element.querySelector('.truncated-title').style.display = 'block';
+        element.querySelector('.full-title').style.display = 'none';
+    }
+</script>
