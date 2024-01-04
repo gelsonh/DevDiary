@@ -50,12 +50,15 @@
                                                     </a>
                                                 </h4>
                                             </div>
-
                                             <div class="post-thumbnail">
                                                 <a asp-action="Details" asp-controller="BlogPosts" asp-route-slug="@blogPost?.Slug">
-                                                    <img src="@(blogPost?.ImageData != null ? _ImageService.ConvertByteArrayToFile(blogPost.ImageData, blogPost.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" alt="Post Images">
+                                                    <img src="@(blogPost?.ImageData != null ? _ImageService.ConvertByteArrayToFile(blogPost.ImageData, blogPost.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")"
+                                                         alt="Post Images"
+                                                         width="780"
+                                                         height="520">
                                                 </a>
                                             </div>
+
                                         </div>
                                     </div>
                                     <!-- End Single Post  -->
