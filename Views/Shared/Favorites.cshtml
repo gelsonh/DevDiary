@@ -44,18 +44,16 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <h4 class="title">
+                                                <h6 class="title">
                                                     <a asp-action="Details" asp-controller="BlogPosts" asp-route-slug="@blogPost?.Slug">
-                                                        @blogPost?.Title
+                                                        @(blogPost?.Title?.Length > 40 ? blogPost?.Title?.Substring(0, 40) + "..." : blogPost?.Title)
                                                     </a>
-                                                </h4>
+                                                </h6>
+
                                             </div>
                                             <div class="post-thumbnail">
                                                 <a asp-action="Details" asp-controller="BlogPosts" asp-route-slug="@blogPost?.Slug">
-                                                    <img src="@(blogPost?.ImageData != null ? _ImageService.ConvertByteArrayToFile(blogPost.ImageData, blogPost.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")"
-                                                         alt="Post Images"
-                                                         width="780"
-                                                         height="520">
+                                                    <img src="@(blogPost?.ImageData != null ? _ImageService.ConvertByteArrayToFile(blogPost.ImageData, blogPost.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" alt="Post Images">
                                                 </a>
                                             </div>
 
