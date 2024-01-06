@@ -29,5 +29,7 @@ namespace DevDiary.Services.Interfaces
         public Task<bool> UserLikedBlogAsync(int blogPostId, string appUserId);
 
         public Task<IEnumerable<BlogPost>> GetFavoriteBlogPostsAsync(string? appUserId);
+
+        public Task<IEnumerable<BlogPost>> GetThreeNewestBlogPostsAsync();
     }
 }

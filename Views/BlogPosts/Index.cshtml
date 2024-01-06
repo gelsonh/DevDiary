@@ -15,7 +15,7 @@
     switch (actionName)
     {
         case "Index":
-            pageTitle = "My Blogs";
+            pageTitle = "All Blogs";
             break;
         case "SearchIndex":
             pageTitle = $"Search for '{searchString}'";
@@ -29,26 +29,13 @@
     }
 }
 
-<style>
 
-
-    .ck-editor__editable_inline {
-        min-height: 600px;
-    }
-
-    input.largerCheckbox {
-        width: 30px;
-        height: 30px;
-    }
-
-    label.form-check-label {
-        font-size: 22px;
-    }
-</style>
 
 <!-- Start Author Area  -->
-<partial name="_AuthorAreaPartial" />
+@* <partial name="_AuthorAreaPartial" />*@
+<partial name="_BlogPostSliderPartial" />
 <!-- End Author Area  -->
+
 <!-- Start Post List Wrapper  -->
 <div class="axil-post-list-area axil-section-gap bg-color-white">
     <div class="container">
@@ -72,10 +59,10 @@
                         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
                     </div>
                     @Html.PagedListPager(Model, pageNum => Url.Action(actionName, new { pageNum, searchString }),
-                    new PagedListRenderOptions
+                             new PagedListRenderOptions
                     {
-                    LiElementClasses = new string[] {"my-page-item"},
-                    PageClasses = new string[] {"my-page-link"}
+                        LiElementClasses = new string[] { "my-page-item" },
+                        PageClasses = new string[] { "my-page-link" }
                     })
                 </div>
             </div>

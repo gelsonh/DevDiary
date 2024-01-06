@@ -79,8 +79,8 @@ namespace DevDiary.Services
                 IEnumerable<BlogPost> blogPosts = await _context.BlogPosts.Include(b => b.Category)
                                                                           .Include(b => b.Comments)
                                                                           .ThenInclude(c => c.Author)
-                                                                          .Include(b => b.Tags)                                                                       
-                                                                          .Where(b => b.IsPublished)  
+                                                                          .Include(b => b.Tags)
+                                                                          .Where(b => b.IsPublished)
 
                                                                           .ToListAsync();
 
@@ -148,8 +148,6 @@ namespace DevDiary.Services
             }
         }
 
-
-
         public async Task<IEnumerable<BlogPost>> GetPopularBlogPostAsync(int? count)
         {
             try
@@ -157,6 +155,7 @@ namespace DevDiary.Services
                 IEnumerable<BlogPost> blogPosts = await _context.BlogPosts
                                                                 .Where(b => b.IsPublished == true && b.IsDeleted == false)
                                                                 .Include(b => b.Category)
+                                                                .Include(b => b.Likes)
                                                                 .Include(b => b.Comments)
                                                                     .ThenInclude(c => c.Author)
                                                                 .Include(b => b.Tags)
@@ -225,9 +224,6 @@ namespace DevDiary.Services
                 throw;
             }
         }
-
-
-
         public async Task<bool> IsTagOnBlogPostAsync(int? tagId, int? blogPostId)
         {
             if (tagId == null || blogPostId == null) { return false; }
@@ -353,10 +349,8 @@ namespace DevDiary.Services
                 {
                     blogPosts = blogPosts.Where(b => b.Category != null && b.Category.Name == categoryName).ToList();
                 }
-                else
-                {
-                    blogPosts = Enumerable.Empty<BlogPost>();
-                }
+                // No necesitas la condición else
+                // Si categoryName está vacío o nulo, simplemente devolver todos los blogs
 
                 return blogPosts;
             }
@@ -412,5 +406,26 @@ namespace DevDiary.Services
             }
 
         }
+
+        public async Task<IEnumerable<BlogPost>> GetThreeNewestBlogPostsAsync()
+        {
+            try
+            {
+                IEnumerable<BlogPost> newestBlogPosts = await _context.BlogPosts
+                    .Where(b => b.IsPublished == true && b.IsDeleted == false)
+                    .OrderByDescending(b => b.Created)
+                    .Take(3)
+                    .Include(b => b.Likes)
+                    .Include(b => b.Category)
+                    .ToListAsync();
+
+                return newestBlogPosts;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

@@ -56,6 +56,9 @@ namespace DevDiary.Controllers
             // Recupera los Blog Posts ordenados por fecha de creación descendente (los más recientes primero)
             var blogPosts = await _blogService.GetBlogPostAsync();
 
+            //blogPosts = await _blogService.GetThreeNewestBlogPostsAsync();
+
+
             // Aplica un filtro para excluir los blogs eliminados
             blogPosts = blogPosts.Where(post => !post.IsDeleted);
 
@@ -100,7 +103,8 @@ namespace DevDiary.Controllers
         public async Task<IActionResult> Category(int? pageNum, string categoryName)
         {
             int pageSize = 3;
-            int page = pageNum ?? 1;
+            int page = int.Parse(HttpContext.Request.Query["pageNum"].ToString());
+
 
             IPagedList<BlogPost> blogPosts = await (await _blogService.GetBlogPostByCategoryAsync(categoryName))
                 .ToPagedListAsync(page, pageSize);

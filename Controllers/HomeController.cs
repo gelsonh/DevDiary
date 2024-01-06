@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using DevDiary.Services.Interfaces;
 
 namespace DevDiary.Controllers
 {
@@ -16,20 +17,23 @@ namespace DevDiary.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IEmailSender _emailService;
         private readonly IConfiguration _configuration;
+        private readonly IBlogService _blogService;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, ApplicationDbContext context, IEmailSender emailService, IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, ApplicationDbContext context, IEmailSender emailService, IConfiguration configuration, IBlogService blogService)
         {
             _logger = logger;
             _userManager = userManager;
             _context = context;
             _emailService = emailService;
             _configuration = configuration;
+            _blogService = blogService;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
 
         public IActionResult Privacy()
         {
