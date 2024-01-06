@@ -21,8 +21,12 @@
                                 <!-- Start Post Thumbnail  -->
                                 <div class="post-thumbnail">
                                     <a class="hover-flip-item-wrapper" href="#">
-                                        <img src="@(blogPost.ImageData != null ? _ImageService.ConvertByteArrayToFile(blogPost.ImageData, blogPost.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" alt="Post Images" style="max-height: 550px; width: 100%; object-fit: cover;">
+                                        <img src="@(blogPost.ImageData != null ? _ImageService.ConvertByteArrayToFile(blogPost.ImageData, blogPost.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" alt="Post Images"
+                                        style="text-center max-width: 61.5rem; max-height: 34.375rem;">
                                     </a>
+
+
+
 
 
                                 </div>
