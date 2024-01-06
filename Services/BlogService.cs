@@ -411,15 +411,17 @@ namespace DevDiary.Services
         {
             try
             {
-                IEnumerable<BlogPost> newestBlogPosts = await _context.BlogPosts
-                    .Where(b => b.IsPublished == true && b.IsDeleted == false)
-                    .OrderByDescending(b => b.Created)
-                    .Take(3)
+                // Obtén todas las publicaciones de blog que estén publicadas y no eliminadas
+                var allBlogPosts = await _context.BlogPosts
+                    .Where(b => b.IsPublished && !b.IsDeleted)
                     .Include(b => b.Likes)
                     .Include(b => b.Category)
                     .ToListAsync();
 
-                return newestBlogPosts;
+                // Ordena las publicaciones de blog de manera aleatoria y toma las primeras tres
+                var randomBlogPosts = allBlogPosts.OrderBy(x => Guid.NewGuid()).Take(3);
+
+                return randomBlogPosts;
             }
             catch (Exception)
             {
