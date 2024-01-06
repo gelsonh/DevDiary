@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="~/assets/css/style.css">
     <link rel="stylesheet" href="~/css/site.css">
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Favicon -->
     <link rel="shortcut icon"
@@ -77,6 +78,9 @@
                                 <ul class="mainmenu">
                                     <li class="menu-item-has-children">
                                         <a asp-controller="BlogPosts" asp-action="Index">Home</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="BlogPosts" asp-action="AboutMe">About Me</a>
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">Posts</a>
@@ -241,8 +245,11 @@
                 </div>
                 <!-- Start Mainmanu Nav -->
                 <ul class="mainmenu">
-                    <li class="">
+                    <li>
                         <a asp-controller="BlogPosts" asp-action="Index">Home</a>
+                    </li>
+                    <li>
+                        <a asp-controller="BlogPosts" asp-action="_AuthorAreaPartial">About Me</a>
                     </li>
                     <li class="menu-item-has-children">
                         <a href="#">Posts</a>
@@ -342,7 +349,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-12 col-md-12">
                             <div class="copyright-right   text-center mt_md--20 mt_sm--20">
-                                <p>Dev Diary © 2023</p>
+                                <p>Dev Diary © 2024</p>
                             </div>
                         </div>
                     </div>

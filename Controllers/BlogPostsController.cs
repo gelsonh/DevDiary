@@ -44,6 +44,10 @@ namespace DevDiary.Controllers
             return View(blogPosts);
         }
 
+        public IActionResult AboutMe()
+        {
+            return PartialView("_AuthorAreaPartial");
+        }
 
 
         // GET: BlogPosts
@@ -56,7 +60,6 @@ namespace DevDiary.Controllers
             // Recupera los Blog Posts ordenados por fecha de creación descendente (los más recientes primero)
             var blogPosts = await _blogService.GetBlogPostAsync();
 
-            //blogPosts = await _blogService.GetThreeNewestBlogPostsAsync();
 
 
             // Aplica un filtro para excluir los blogs eliminados
