@@ -192,7 +192,7 @@
                             <div class="modern-post-activation slick-layout-wrapper axil-slick-arrow arrow-between-side">
 
 
-                                @foreach (var blogPost in Model)
+                                @foreach (BlogPost blogPost in await _blogService.GetAllBlogPostAsync())
                                 {
                                     <!-- Start Single Post  -->
                                     <div class="slick-single-layout">
