@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using X.PagedList;
 using DevDiary.Helpers;
+using System.Reflection.Metadata;
 
 namespace DevDiary.Controllers
 {
@@ -95,13 +96,18 @@ namespace DevDiary.Controllers
             int page = pageNum ?? 1;
 
             IPagedList<BlogPost> blogPosts = await (await _blogService.GetPopularBlogPostAsync()).ToPagedListAsync(page, pageSize);
+            // Calcula el número de orden basándote en la página y el índice en esa página
+            for (int i = 0; i < blogPosts.Count; i++)
+            {
+                int orderNumber = (page - 1) * pageSize + i + 1;
+                blogPosts[i].Order = orderNumber;
+            }
 
-
-            ViewData["ActionName"] = nameof(Popular);
-
-
-            return View(nameof(Index), blogPosts);
+           
+            // Llamada a la vista parcial y pasando el modelo (blogPosts)
+            return PartialView("_MostPopularBlogsPartial", blogPosts);
         }
+
 
         public async Task<IActionResult> Category(int? pageNum, string categoryName)
         {

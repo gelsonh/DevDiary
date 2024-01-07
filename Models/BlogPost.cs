@@ -23,7 +23,7 @@ namespace DevDiary.Models
         [Required]
         public string? Content { get; set; }
 
-
+        public int Order { get; set; }
         public DateTime Created
         {
             get
