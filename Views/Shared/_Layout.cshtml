@@ -438,39 +438,37 @@
 
 
     <!-- Modernizer JS -->
-    <script src="~/assets/js/vendor/modernizr.min.js"></script>
+    <script async src="~/assets/js/vendor/modernizr.min.js"></script>
 
     <!-- jQuery JS -->
-    <script src="~/assets/js/vendor/jquery.js"></script>
-
+    <script async src="~/assets/js/vendor/jquery.js"></script>
 
     <!-- Sweet Alerts -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Slick JS -->
-    <script src="~/assets/js/vendor/slick.min.js"></script>
+    <script async src="~/assets/js/vendor/slick.min.js"></script>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-
-
+    <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
     <!-- TweenMax JS -->
-    <script src="~/assets/js/vendor/tweenmax.min.js"></script>
+    <script async src="~/assets/js/vendor/tweenmax.min.js"></script>
 
     <!-- js.cookie -->
-    <script src="~/assets/js/vendor/js.cookie.js"></script>
+    <script async src="~/assets/js/vendor/js.cookie.js"></script>
 
     <!-- jQuery Style Switcher -->
-    <script src="~/assets/js/vendor/jquery.style.switcher.js"></script>
+    <script async src="~/assets/js/vendor/jquery.style.switcher.js"></script>
 
     <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/5f740f3843.js" crossorigin="anonymous"></script>
+    <script async src="https://kit.fontawesome.com/5f740f3843.js" crossorigin="anonymous"></script>
 
     <!-- Prism (if you need it) -->
-    <!-- <script src="~/dist/libs/prismjs/prism.js"></script> -->
-    <!-- Main JS -->
-    <script src="~/assets/js/main.js"></script>
+    <!-- <script async src="~/dist/libs/prismjs/prism.js"></script> -->
+    <!-- Main JS (load deferred) -->
+    <script defer src="~/assets/js/main.js"></script>
+
 
     <script>
         $(function () {
@@ -503,59 +501,11 @@
 
         <!--End Sweet Alerts-->
         <!-- CK Editor -->
-        <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+        <!-- CK Editor -->
+        <script defer src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 
-        <script>
-            class MyUploadAdapter {
-                constructor(loader) {
-                    this.loader = loader;
-                }
-
-                upload() {
-                    return this.loader.file
-                        .then(file => new Promise((resolve, reject) => {
-                            const data = new FormData();
-                            data.append('upload', file);
-
-                            const xhr = new XMLHttpRequest();
-                            xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
-
-                            xhr.onload = () => {
-                                if (xhr.status === 200) {
-                                    try {
-                                        // Verificar si la respuesta es JSON antes de intentar parsear
-                                        const contentType = xhr.getResponseHeader('Content-Type');
-                                        console.log('Respuesta del servidor:', xhr.responseText);
-                                        if (contentType && contentType.indexOf('application/json') !== -1) {
-                                            const response = JSON.parse(xhr.responseText);
-                                            const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
-                                            resolve({
-                                                default: imageUrl
-                                            });
-                                        } else {
-                                            reject('La respuesta del servidor no es JSON');
-                                        }
-                                    } catch (error) {
-                                        reject('La respuesta del servidor no es un JSON válido');
-                                    }
-                                } else {
-                                    reject('No se pudo cargar la imagen');
-                                }
-                            };
-
-                            xhr.onerror = () => {
-                                reject('Error al cargar la imagen');
-                            };
-                            xhr.send(data);
-                        }));
-                }
-
-                // Otros métodos necesarios...
-            }
-
-            // Resto del código...
-
-
+        <script defer>
+            // Resto del código de CKEditor aquí...
             document.addEventListener('DOMContentLoaded', function () {
                 ClassicEditor
                     .create(document.querySelector('.editor'), {
@@ -574,8 +524,8 @@
                         };
                     });
             });
-
         </script>
+
         <!-- Fin de CK Editor -->
     }
 
