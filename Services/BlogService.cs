@@ -407,7 +407,7 @@ namespace DevDiary.Services
 
         }
 
-        public async Task<IEnumerable<BlogPost>> GetThreeNewestBlogPostsAsync()
+        public async Task<IEnumerable<BlogPost>> GetThreeNewestBlogPostsAsync(int count)
         {
             try
             {
@@ -418,8 +418,8 @@ namespace DevDiary.Services
                     .Include(b => b.Category)
                     .ToListAsync();
 
-                // Ordena las publicaciones de blog de manera aleatoria y toma las primeras tres
-                var randomBlogPosts = allBlogPosts.OrderBy(x => Guid.NewGuid()).Take(3);
+                // Ordena las publicaciones de blog de manera aleatoria y toma las primeras 'count'
+                var randomBlogPosts = allBlogPosts.OrderBy(x => Guid.NewGuid()).Take(count);
 
                 return randomBlogPosts;
             }
@@ -429,5 +429,9 @@ namespace DevDiary.Services
             }
         }
 
+        public Task GetThreeNewestBlogPostsAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

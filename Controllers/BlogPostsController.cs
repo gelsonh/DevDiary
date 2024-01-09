@@ -50,23 +50,37 @@ namespace DevDiary.Controllers
             return PartialView("_AuthorAreaPartial");
         }
 
+        public async Task<IActionResult> RandomBlog()
+        {
+            try
+            {
+                // Obtén una publicación de blog aleatoria
+                var randomBlogPost = (await _blogService.GetThreeNewestBlogPostsAsync(1));
+
+                return View(randomBlogPost);
+            }
+            catch (Exception)
+            {
+                // Manejar la excepción según sea necesario
+                return View();
+            }
+        }
 
         // GET: BlogPosts
         [AllowAnonymous]
         public async Task<IActionResult> Index(int? pageNum)
         {
             int pageSize = 3;
-            int page = pageNum ?? 1;
+            int page = pageNum ?? 1;         
 
             // Recupera los Blog Posts ordenados por fecha de creación descendente (los más recientes primero)
             var blogPosts = await _blogService.GetBlogPostAsync();
-
-
 
             // Aplica un filtro para excluir los blogs eliminados
             blogPosts = blogPosts.Where(post => !post.IsDeleted);
 
             blogPosts = blogPosts.OrderByDescending(post => post.Created);
+
 
             // Pagina los resultados
             IPagedList<BlogPost> pagedBlogPosts = blogPosts.ToPagedList(page, pageSize);

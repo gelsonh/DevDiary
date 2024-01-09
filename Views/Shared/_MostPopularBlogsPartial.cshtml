@@ -1,14 +1,15 @@
 ﻿@model IPagedList<BlogPost>
 @using DevDiary.Enums;
+@using DevDiary.Services
 @using DevDiary.Services.Interfaces;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 @using X.PagedList;
 @inject IImageService _ImageService
+
 @{
     Layout = "_Layout";
 }
-
 
 
 <!-- Start Trending Post Area  -->

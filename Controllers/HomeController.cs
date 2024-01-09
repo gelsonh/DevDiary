@@ -31,6 +31,8 @@ namespace DevDiary.Controllers
 
         public IActionResult Index()
         {
+      
+
             return View();
         }
 
