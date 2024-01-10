@@ -26,7 +26,7 @@ body {
     list-style: none;
 }
 
-/* Estilos base para ambos modos */
+ Estilos base para ambos modos 
 .my-page-link {
     display: block;
     width: 40px;
@@ -46,15 +46,15 @@ a.my-page-link:active {
     background-color: #ff993b;
 }
 
-/* Estilos para el modo oscuro */
+ Estilos para el modo oscuro 
 .my-page-item.dark a.my-page-link {
-    background-color: #000000; /* Color negro para el modo oscuro */
+    background-color: #000000;  Color negro para el modo oscuro 
 }
 
     .my-page-item.dark a.my-page-link:hover,
     .my-page-item.dark a.my-page-link:active {
         background-color: #ff993b;
-        /* Puedes ajustar otros estilos adicionales para el modo oscuro aquí si es necesario */
+         Puedes ajustar otros estilos adicionales para el modo oscuro aquí si es necesario 
     }
 
 

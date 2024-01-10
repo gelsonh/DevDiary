@@ -16,10 +16,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - DevDiary</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon"
+          href="~/favicon.ico"
+          type="image/x-icon">
 
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+   @*  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="~/assets/css/vendor/font-awesome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
@@ -27,23 +34,29 @@
     <link rel="stylesheet" href="~/assets/css/plugins/plugins.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
     <link rel="stylesheet" href="~/css/site.css">
+ *@
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/vendor/font-awesome.css">
+    <link rel="stylesheet" href="~/assets/css/vendor/slick.css">
+    <link rel="stylesheet" href="~/assets/css/vendor/slick-theme.css">
+    <link rel="stylesheet" href="~/assets/css/vendor/base.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/plugins.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/css/site.css">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon"
-          href="~/favicon.ico"
-          type="image/x-icon">
-
-    <style>
+    
+   @*  <style>
         .axil-footer-area {
             height: 0; /* Ajusta la altura según sea necesario */
             position: absolute;
             bottom: 0; /* Coloca el footer en la parte inferior del contenedor relativo */
             width: 100%;
         }
-    </style>
+    </style> *@
 
 </head>
 <body>
@@ -470,38 +483,20 @@
 
     </div>
 
-
-    <!-- jQuery JS (load synchronously) -->
-    <script src="~/assets/js/vendor/jquery.js"></script>
-
     <!-- Modernizer JS -->
-    <script  src="~/assets/js/vendor/modernizr.min.js"></script>
-
-    <!-- Sweet Alerts -->
-    <script  src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Slick JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-
+    <script src="~/assets/js/vendor/modernizr.min.js"></script>
+    <!-- jQuery JS -->
+    <script src="~/assets/js/vendor/jquery.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-
-    <!-- TweenMax JS -->
+    <script src="~/assets/js/vendor/bootstrap.min.js"></script>
+    <script src="~/assets/js/vendor/slick.min.js"></script>
     <script src="~/assets/js/vendor/tweenmax.min.js"></script>
-
-    <!-- js.cookie -->
-    <script  src="~/assets/js/vendor/js.cookie.js"></script>
-
-    <!-- jQuery Style Switcher -->
+    <script src="~/assets/js/vendor/js.cookie.js"></script>
     <script src="~/assets/js/vendor/jquery.style.switcher.js"></script>
+    <script src="~/assets/js/main.js"></script>
 
-    <!-- Font Awesome -->
-    <script  src="https://kit.fontawesome.com/5f740f3843.js" crossorigin="anonymous"></script>
 
-    <!-- Prism (if you need it) -->
-    <!-- <script async src="~/dist/libs/prismjs/prism.js"></script> -->
-    <!-- Main JS (load deferred) -->
-    <script defer src="~/assets/js/main.js"></script>
+  
 
     <script>
         // Espera a que se cargue jQuery antes de ejecutar el código dependiente

@@ -47,7 +47,7 @@ namespace DevDiary.Controllers
 
         public IActionResult AboutMe()
         {
-            return PartialView("_AuthorAreaPartial");
+            return PartialView("AboutMe");
         }
 
         public async Task<IActionResult> RandomBlog()
