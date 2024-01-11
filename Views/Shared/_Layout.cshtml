@@ -210,21 +210,22 @@
                     </div>
                     <div class="col-xl-5 col-12">
                         <div class="header-search d-flex flex-wrap align-items-center justify-content-center justify-content-xl-end">
-                            <form class="header-search-form d-sm-block d-none">
+                            <form asp-action="SearchIndex" asp-controller="BlogPosts" class="header-search-form d-sm-block d-none">
                                 <div class="axil-search form-group">
                                     <button type="submit" class="search-button"><i class="fal fa-search"></i></button>
-                                    <input type="text" class="form-control" placeholder="Search">
+                                    <input type="text" class="form-control" placeholder="Search" name="searchString">
                                 </div>
                             </form>
                             <div class="mobile-search-wrapper d-sm-none d-block">
                                 <button class="search-button-toggle"><i class="fal fa-search"></i></button>
-                                <form class="header-search-form">
+                                <form asp-action="SearchIndex" asp-controller="BlogPosts" class="header-search-form">
                                     <div class="axil-search form-group">
                                         <button type="submit" class="search-button"><i class="fal fa-search"></i></button>
-                                        <input type="text" class="form-control" placeholder="Search">
+                                        <input type="text" class="form-control" placeholder="Search" name="searchString">
                                     </div>
                                 </form>
                             </div>
+
                             <ul class="metabar-block">
 
                                 <li class="nav-item dropdown has-arrow main-drop">
