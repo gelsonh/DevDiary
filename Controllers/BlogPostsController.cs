@@ -36,11 +36,10 @@ namespace DevDiary.Controllers
             int pageSize = 3;
             int page = pageNum ?? 1;
 
-            // Obtén todos los blogs sin aplicar un filtro por estado de publicación
-            var allBlogPosts = await _blogService.GetAllBlogPostAsync();
-            var orderedBlogPosts = allBlogPosts.OrderByDescending(b => b.Created); // Ordenar por fecha de creación
 
-            IPagedList<BlogPost> blogPosts = await orderedBlogPosts.ToPagedListAsync(page, pageSize);
+            IPagedList<BlogPost> blogPosts = await (await _blogService.GetAllBlogPostAsync())
+                .OrderByDescending(b => b.Created) // Ordenar por fecha de creación
+                .ToPagedListAsync(page, pageSize);
 
             return View(blogPosts);
         }
