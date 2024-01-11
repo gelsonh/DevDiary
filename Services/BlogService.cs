@@ -407,31 +407,6 @@ namespace DevDiary.Services
 
         }
 
-        public async Task<IEnumerable<BlogPost>> GetThreeNewestBlogPostsAsync(int count)
-        {
-            try
-            {
-                // Obtén todas las publicaciones de blog que estén publicadas y no eliminadas
-                var allBlogPosts = await _context.BlogPosts
-                    .Where(b => b.IsPublished && !b.IsDeleted)
-                    .Include(b => b.Likes)
-                    .Include(b => b.Category)
-                    .ToListAsync();
-
-                // Ordena las publicaciones de blog de manera aleatoria y toma las primeras 'count'
-                var randomBlogPosts = allBlogPosts.OrderBy(x => Guid.NewGuid()).Take(count);
-
-                return randomBlogPosts;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public Task GetThreeNewestBlogPostsAsync()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

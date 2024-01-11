@@ -49,22 +49,6 @@ namespace DevDiary.Controllers
             return PartialView("AboutMe");
         }
 
-        public async Task<IActionResult> RandomBlog()
-        {
-            try
-            {
-                // Obtén una publicación de blog aleatoria
-                var randomBlogPost = (await _blogService.GetThreeNewestBlogPostsAsync(1));
-
-                return View(randomBlogPost);
-            }
-            catch (Exception)
-            {
-                // Manejar la excepción según sea necesario
-                return View();
-            }
-        }
-
         // GET: BlogPosts
         [AllowAnonymous]
         public async Task<IActionResult> Index(int? pageNum)
@@ -138,7 +122,7 @@ namespace DevDiary.Controllers
 
         public async Task<IActionResult> Favorites(int? pageNum)
         {
-            int pageSize = 10;
+            int pageSize = 3;
             int page = pageNum ?? 1;
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             IEnumerable<BlogPost> likedPosts = await _blogService.GetFavoriteBlogPostsAsync(userId);

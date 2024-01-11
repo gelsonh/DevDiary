@@ -30,6 +30,6 @@ namespace DevDiary.Services.Interfaces
 
         public Task<IEnumerable<BlogPost>> GetFavoriteBlogPostsAsync(string? appUserId);
 
-        public Task<IEnumerable<BlogPost>> GetThreeNewestBlogPostsAsync(int count);
+       
     }
 }
