@@ -126,7 +126,16 @@ namespace DevDiary.Controllers
             IEnumerable<BlogPost> likedPosts = await _blogService.GetFavoriteBlogPostsAsync(userId);
             IPagedList<BlogPost> blogPosts = await likedPosts.ToPagedListAsync(page, pageSize);
             ViewData["ActionName"] = nameof(Favorites);
+            // Calcula el número de orden basándote en la página y el índice en esa página
+            for (int i = 0; i < blogPosts.Count; i++)
+            {
+                int orderNumber = (page - 1) * pageSize + i + 1;
+                blogPosts[i].Order = orderNumber;
+            }
             return View(blogPosts);
+
+        
+
         }
 
 
