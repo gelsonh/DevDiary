@@ -61,6 +61,7 @@
                     <div>
                         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
                     </div>
+
                     @Html.PagedListPager(Model, pageNum => Url.Action(actionName, new { pageNum, searchString }),
                              new PagedListRenderOptions
                     {
@@ -68,6 +69,8 @@
                         PageClasses = new string[] { "my-page-link" }
                     })
                 </div>
+
+                         
             </div>
             <!-- End Post List  -->
 

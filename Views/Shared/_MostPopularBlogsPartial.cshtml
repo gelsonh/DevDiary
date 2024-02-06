@@ -11,6 +11,23 @@
     Layout = "_Layout";
 }
 
+@{
+    ViewData["Title"] = "Index";
+    string? searchString = ViewBag.SearchString;
+    string? actionName = ViewBag.ActionName;
+
+    string pageTitle = "";
+
+    switch (actionName)
+    {
+    
+        case "SearchIndex":
+            pageTitle = $"Search for '{searchString}'";
+            break;
+      
+    }
+}
+
 
 <!-- Start Trending Post Area  -->
 <div class="axil-trending-post-area axil-section-gap bg-color-white">
@@ -98,13 +115,15 @@
                     <div>
                         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
                     </div>
-                    @Html.PagedListPager(Model, pageNum => Url.Action("Popular", new { pageNum }),
+                    @Html.PagedListPager(Model, pageNum => Url.Action(actionName, new { pageNum, searchString }),
                              new PagedListRenderOptions
                     {
                         LiElementClasses = new string[] { "my-page-item" },
                         PageClasses = new string[] { "my-page-link" }
                     })
                 </div>
+
+                
             </div>
         </div>
     </div>

@@ -1,30 +1,17 @@
-﻿@using DevDiary.Enums;
+﻿@model DevDiary.Models.BlogPost
+@using DevDiary.Enums;
 @using DevDiary.Services.Interfaces;
-@model DevDiary.Models.BlogPost
 @inject IImageService _ImageService
 @inject IBlogService _BlogService
 
 @{
     ViewData["Title"] = "Create";
 }
-<style>
-    .ck-editor__editable_inline {
-        min-height: 600px;
-    }
 
-    input.largerCheckbox {
-        width: 30px;
-        height: 30px;
-    }
-
-    label.form-check-label {
-        font-size: 22px;
-    }
-</style>
 <div class="post-single-wrapper axil-section-gap bg-color-white">
     <div class="container">
         <h1>Create</h1>
-        <h4>BlogPost</h4>
+       
     </div>
     <hr />
     <main class="container mt-5">
@@ -75,13 +62,14 @@
                 </div>
             </div>
             <div class="form-group d-flex justify-content-end">
-                <label class="form-check-label me-4 mt-2" asp-for="IsPublished">Publish?</label>
-                <input class="largerCheckbox me-8" type="checkbox" asp-for="IsPublished" />
+                <label class="form-check-label me-2 mt-2" asp-for="IsPublished">Publish?</label>
+                <input class="form-check-input me-2 mt-2" type="checkbox" asp-for="IsPublished" />
                 <span asp-validation-for="IsPublished" class="text-danger"></span>
             </div>
             <div class="form-group d-flex justify-content-end">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
         </form>
         <div class="form-group mt-5 start-0">
             <a asp-action="Index">Back</a>
@@ -97,55 +85,7 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 
     <script>
-        class MyUploadAdapter {
-            constructor(loader) {
-                this.loader = loader;
-            }
-
-            upload() {
-                return this.loader.file
-                    .then(file => new Promise((resolve, reject) => {
-                        const data = new FormData();
-                        data.append('upload', file);
-
-                        const xhr = new XMLHttpRequest();
-                        xhr.open('POST', 'https://devdiary-production.up.railway.app', true);
-
-                        xhr.onload = () => {
-                            if (xhr.status === 200) {
-                                try {
-                                    // Verificar si la respuesta es JSON antes de intentar parsear
-                                    const contentType = xhr.getResponseHeader('Content-Type');
-                                    console.log('Respuesta del servidor:', xhr.responseText);
-                                    if (contentType && contentType.indexOf('application/json') !== -1) {
-                                        const response = JSON.parse(xhr.responseText);
-                                        const imageUrl = 'data:image/jpeg;base64,' + response.imageFileString;
-                                        resolve({
-                                            default: imageUrl
-                                        });
-                                    } else {
-                                        reject('La respuesta del servidor no es JSON');
-                                    }
-                                } catch (error) {
-                                    reject('La respuesta del servidor no es un JSON válido');
-                                }
-                            } else {
-                                reject('No se pudo cargar la imagen');
-                            }
-                        };
-
-                        xhr.onerror = () => {
-                            reject('Error al cargar la imagen');
-                        };
-                        xhr.send(data);
-                    }));
-            }
-
-            // Otros métodos necesarios...
-        }
-
-        // Resto del código...
-
+   
         document.addEventListener('DOMContentLoaded', function () {
             ClassicEditor
                 .create(document.querySelector('.editor'), {

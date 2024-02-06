@@ -5,6 +5,7 @@
 @inject IImageService _ImageService
 @inject IBlogService BlogService
 
+
 @{
     int pageSize = 3;
     int page = 1;
@@ -20,54 +21,28 @@
     <div class="sidebar-inner">
 
         <!-- Start Single Widget  -->
-        @*     <div class="axil-single-widget widget widget_categories mb--30">
-        <ul>
-        <li class="cat-item">
-        <a asp-action="Category" asp-controller="BlogPosts" asp-route-categoryName="JavaScript" asp-route-pageNum="1" class="inner">
-        <div class="thumbnail">
-        <img src="~/assets/images/logo/JS-Logo.png" alt="JS Logo">
-        </div>
-        <div class="content">
-        <h5 class="title">JavaScript</h5>
-        </div>
-        </a>
+        <div class="axil-single-widget widget widget_categories mb--30">
+            <ul>
+                @foreach (Category category in await BlogService.GetCategoriesAsync())
+                {
+                    <li class="cat-item">
+                        <a href="/BlogPosts/Category/@category.Id" class="inner">
+                            <div class="thumbnail">
+                                <img src="@_ImageService.ConvertByteArrayToFile(
+                            category.ImageData, category.ImageType, DefaultImage.CategoryImage)"
+                                     alt="@category.Name">
+                            </div>
+                            <div class="content">
+                                <h5 class="title">@category.Name</h5>
+                            </div>
+                        </a>
+                    </li>
+                }
 
-        </li>
-        <li class="cat-item">
-        <a asp-action="Category" asp-controller="BlogPosts" asp-route-categoryName="AI" class="inner">
-        <div class="thumbnail">
-        <img src="assets/images/logo/AI-Logo.png" alt="AI Logo">
-        </div>
-        <div class="content">
-        <h5 class="title">AI</h5>
-        </div>
-        </a>
-        </li>
-        <li class="cat-item">
-        <a asp-action="Category" asp-controller="BlogPosts" asp-route-categoryName=".NET" class="inner">
-        <div class="thumbnail">
-        <img src="~/assets/images/logo/NET-Logo.png" alt=".NET Logo">
-        </div>
-        <div class="content">
-        <h5 class="title">.Net</h5>
-        </div>
-        </a>
-        </li>
-        <li class="cat-item">
-        <a asp-action="Category" asp-controller="BlogPosts" asp-route-categoryName="Developer" class="inner">
-        <div class="thumbnail">
-        <img src="assets/images/logo/Developer.Logo.png" alt="Dev Logo">
-        </div>
-        <div class="content">
-        <h5 class="title">Developer</h5>
-        </div>
-        </a>
-        </li>
-        </ul>
+            </ul>
 
-        </div>  *@
+        </div>
         <!-- End Single Widget  -->
-
         <!-- Start Single Widget  -->
         <div class="axil-single-widget widget widget_search mb--30">
             <h5 class="widget-title">Search</h5>

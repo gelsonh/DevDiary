@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using X.PagedList;
 using DevDiary.Helpers;
-using System.Reflection.Metadata;
 
 namespace DevDiary.Controllers
 {
@@ -26,8 +25,6 @@ namespace DevDiary.Controllers
             _context = context;
             _imageService = imageService;
             _blogService = blogService;
-
-
         }
 
         [Authorize(Roles = "Admin")]
@@ -93,6 +90,7 @@ namespace DevDiary.Controllers
             int page = pageNum ?? 1;
 
             IPagedList<BlogPost> blogPosts = await (await _blogService.GetPopularBlogPostAsync()).ToPagedListAsync(page, pageSize);
+
             // Calcula el número de orden basándote en la página y el índice en esa página
             for (int i = 0; i < blogPosts.Count; i++)
             {
@@ -109,13 +107,13 @@ namespace DevDiary.Controllers
         public async Task<IActionResult> Category(int? pageNum, string categoryName)
         {
             int pageSize = 3;
-            int page = int.Parse(HttpContext.Request.Query["pageNum"].ToString());
-
+            int page = pageNum ?? 1;
 
             IPagedList<BlogPost> blogPosts = await (await _blogService.GetBlogPostByCategoryAsync(categoryName))
                 .ToPagedListAsync(page, pageSize);
 
             ViewData["CategoryName"] = categoryName;
+          
 
             return View("Index", blogPosts);
         }

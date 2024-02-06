@@ -343,14 +343,14 @@ namespace DevDiary.Services
         {
             try
             {
-                IEnumerable<BlogPost> blogPosts = await _context.BlogPosts.ToListAsync();
-
-                if (!string.IsNullOrEmpty(categoryName))
-                {
-                    blogPosts = blogPosts.Where(b => b.Category != null && b.Category.Name == categoryName).ToList();
-                }
-                // No necesitas la condición else
-                // Si categoryName está vacío o nulo, simplemente devolver todos los blogs
+                IEnumerable<BlogPost> blogPosts = await _context.BlogPosts
+                                                              .Where(b => b.IsPublished == true && b.IsDeleted == false)
+                                                              .Include(b => b.Category)
+                                                              .Include(b => b.Likes)
+                                                              .Include(b => b.Comments)
+                                                                  .ThenInclude(c => c.Author)
+                                                              .Include(b => b.Tags)
+                                                              .ToListAsync();
 
                 return blogPosts;
             }
