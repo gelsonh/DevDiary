@@ -42,6 +42,7 @@
 <body>
 
     <partial name="_LogoutPartial" />
+
     <div class="main-wrapper">
         <div class="mouse-cursor cursor-outer"></div>
         <div class="mouse-cursor cursor-inner"></div>
@@ -255,9 +256,11 @@
             </div>
         </header>
         <!-- END Header -->
+
         <!-- Start Mobile Menu Area  -->
         <div class="popup-mobilemenu-area">
             <div class="inner">
+
                 <div class="mobile-menu-top">
                     <div class="logo">
                         <a href="~/BlogPosts/Index">
@@ -271,6 +274,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Start Mainmanu Nav -->
                 <ul class="mainmenu">
                     <li>
@@ -284,21 +288,22 @@
                         <ul class="axil-submenu">
                             <li>
                                 <a class="hover-flip-item-wrapper" asp-action="Index" asp-controller="BlogPosts">
-                                    <span class="">
+                                    <span class="hover-flip-item">
                                         <span>Recent Posts</span>
                                     </span>
                                 </a>
                             </li>
                             <li>
                                 <a class="hover-flip-item-wrapper" asp-action="Popular" asp-controller="BlogPosts">
-                                    <span class="">
+                                    <span class="hover-flip-item">
                                         <span> Popular Posts</span>
                                     </span>
                                 </a>
                             </li>
-
                         </ul>
                     </li>
+
+                 
                     <li><a asp-action="ContactMe" asp-controller="Home">Contact</a></li>
                     @if (User.Identity?.IsAuthenticated == true)
                     {
@@ -313,21 +318,21 @@
                             <ul class="axil-submenu">
                                 <li>
                                     <a class="hover-flip-item-wrapper" asp-controller="BlogPosts" asp-action="Index">
-                                        <span class="">
+                                        <span class="hover-flip-item">
                                             <span>Admin</span>
                                         </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="hover-flip-item-wrapper" href="~/swagger">
-                                        <span class="">
+                                        <span class="hover-flip-item">
                                             <span>APIs</span>
                                         </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="hover-flip-item-wrapper" asp-controller="BlogPosts" asp-action="Create">
-                                        <span class="">
+                                        <span class="hover-flip-item">
                                             <span>Add New Post</span>
                                         </span>
                                     </a>

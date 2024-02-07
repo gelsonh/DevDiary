@@ -63,7 +63,8 @@ namespace DevDiary.Controllers
 
 
             // Pagina los resultados
-            IPagedList<BlogPost> pagedBlogPosts = blogPosts.ToPagedList(page, pageSize);
+            //IPagedList<BlogPost> pagedBlogPosts = blogPosts.ToPagedList(page, pageSize);
+            IPagedList<BlogPost> pagedBlogPosts = await blogPosts.ToPagedListAsync(page, pageSize);
 
             ViewData["ActionName"] = nameof(Index);
 
@@ -97,8 +98,7 @@ namespace DevDiary.Controllers
                 int orderNumber = (page - 1) * pageSize + i + 1;
                 blogPosts[i].Order = orderNumber;
             }
-
-           
+         
             // Llamada a la vista parcial y pasando el modelo (blogPosts)
             return PartialView("_MostPopularBlogsPartial", blogPosts);
         }
@@ -123,19 +123,20 @@ namespace DevDiary.Controllers
             int pageSize = 3;
             int page = pageNum ?? 1;
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             IEnumerable<BlogPost> likedPosts = await _blogService.GetFavoriteBlogPostsAsync(userId);
             IPagedList<BlogPost> blogPosts = await likedPosts.ToPagedListAsync(page, pageSize);
+
             ViewData["ActionName"] = nameof(Favorites);
+
             // Calcula el número de orden basándote en la página y el índice en esa página
             for (int i = 0; i < blogPosts.Count; i++)
             {
                 int orderNumber = (page - 1) * pageSize + i + 1;
                 blogPosts[i].Order = orderNumber;
             }
+
             return View(blogPosts);
-
-        
-
         }
 
 
