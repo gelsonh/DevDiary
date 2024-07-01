@@ -7,27 +7,31 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
+
+// Create a new web application builder with command line arguments
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = DataUtility.GetConnectionString(builder.Configuration) ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 
-
+// Configure Entity Framwork to use PostgreSQL and set custom migration history table
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString, o => o.MigrationsHistoryTable(tableName: "BlogMigrationHistory", schema: "blog")));
 
+// Add a developer exception filter for database-related
+// Helps handle database errors and provides useful information for troubleshooting during development
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
-// Edit this for custom role modifications
+// Configure Identity services with custom user and role
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddDefaultUI()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-// Register Custom Services
+// Register Custom Services with dependency injection
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<IEmailSender, EmailService>();
@@ -35,9 +39,11 @@ builder.Services.AddScoped<IEmailSender, EmailService>();
 // Bind the email settings to the EmailSettings object
 builder.Services.Configure<EmailSetting>(builder.Configuration.GetSection("EmailSetting"));
 
-builder.Services.AddMvc(); // more freedom to customize and edit
+// Add MVC services to the container
+ // More freedom to customize and edit
+builder.Services.AddMvc();
 
-// Add API configs
+// Add and configure Swagger for API documentation
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -52,10 +58,14 @@ builder.Services.AddSwaggerGen(c =>
             Url = new Uri("https://gelsonportfolio.netlify.app/")
         }
     });
-    string xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    // Get the XML comments file name
+    string xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"; 
+
+     // Include XML comments for Swagger documentation
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
 
+// Add CORS policy to allow any origin, method, and header
 builder.Services.AddCors(cors =>
 {
     cors.AddPolicy("DefaultPolicy", builder => builder.AllowAnyOrigin()
@@ -82,14 +92,15 @@ else
     app.UseHsts();
 }
 
+// Enable Swagger middleware
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
+    // Set the Swagger endpoint
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "PublicAPI v1");
-    c.InjectStylesheet("/css/swagger.css");
-    c.InjectJavascript("/js/swagger.js");
-
-    c.DocumentTitle = "Dev Diary Documentation";
+    c.InjectStylesheet("/css/swagger.css"); // Inject custom CSS into Swagger UI
+    c.InjectJavascript("/js/swagger.js"); // Inject custom JavaScript into Swagger UI
+    c.DocumentTitle = "Dev Diary Documentation"; // Set the title of the Swagger UI document
 });
 
 app.UseHttpsRedirection();
@@ -108,10 +119,11 @@ app.MapControllerRoute(
     defaults: new { controller = "BlogPosts", action = "Details" }
     );
 
-
+// Default route configuration 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=BlogPosts}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+// Run the application
 app.Run();
