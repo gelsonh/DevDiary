@@ -11,7 +11,7 @@
 <div class="post-single-wrapper axil-section-gap bg-color-white">
     <div class="container">
         <h1>Create</h1>
-       
+
     </div>
     <hr />
     <main class="container mt-5">
@@ -22,9 +22,11 @@
                     <div class="form-group">
                         <label asp-for="ImageFile" class="control-label">Blog Post Image</label>
                         <img class="img-fluid border rounded-3 mb-2" style="max-height: 350px;"
-                             src="@(Model.ImageData != null ? _ImageService.ConvertByteArrayToFile(Model.ImageData, Model.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")" id="blogImage">
-                        <input asp-for="ImageFile" type="file" class="form-control mt-3 pt-2" accept=".png,.jpg,.jpeg,.gif"
-                               onchange="document.getElementById('blogImage').src = window.URL.createObjectURL(this.files[0])" />
+                            src="@(Model.ImageData != null ? _ImageService.ConvertByteArrayToFile(Model.ImageData, Model.ImageType, DefaultImage.BlogPostImage) : "/img/Default-Image.png")"
+                            id="blogImage">
+                        <input asp-for="ImageFile" type="file" class="form-control mt-3 pt-2"
+                            accept=".png,.jpg,.jpeg,.gif"
+                            onchange="document.getElementById('blogImage').src = window.URL.createObjectURL(this.files[0])" />
                     </div>
 
                     <div class="form-group">
@@ -45,7 +47,8 @@
                 <div class="col-12 col-lg-8">
                     <div class="form-group">
                         <label asp-for="Content" class="control-label"></label>
-                        <textarea asp-for="Content" class="editor form-control"></textarea>
+                        <textarea id="mytextarea" name="message"
+                            placeholder="Enter your text here..."></textarea><br><br>
                         <span asp-validation-for="Content" class="text-danger"></span>
                     </div>
                     <div class="form-group" id="tagContainer">
@@ -61,13 +64,14 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group d-flex justify-content-end">
-                <label class="form-check-label me-2 mt-2" asp-for="IsPublished">Publish?</label>
-                <input class="form-check-input me-2 mt-2" type="checkbox" asp-for="IsPublished" />
+
+
+            <div class="form-group d-flex justify-content-end align-items-center">
+                <label class="form-check-label me-0 mt-2" asp-for="IsPublished">Publish?</label>
+                <input class="form-check-input me-2 mt-2" type="checkbox" asp-for="IsPublished"
+                    style="transform: scale(0.4);" />
                 <span asp-validation-for="IsPublished" class="text-danger"></span>
-            </div>
-            <div class="form-group d-flex justify-content-end">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary btn-sm" />
             </div>
 
         </form>
@@ -81,119 +85,93 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <!--CK Editor-->
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 
-    <script>
-   
-        document.addEventListener('DOMContentLoaded', function () {
-            ClassicEditor
-                .create(document.querySelector('.editor'), {
-                    licenseKey: '',
-                    editorconfig: {
-                        enterMode: 2,
-                        shiftEnterMode: 2
-                    }
-                })
-                .then(editor => {
-                    window.editor = editor;
 
-                    // Configura MyUploadAdapter como el adaptador de carga
-                    editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
-                        return new MyUploadAdapter(loader);
-                    };
-                });
+
+<script>
+    // override the jQuery ":contains" selector to make it case insensitive
+    jQuery.expr[':'].contains = function (a, i, m) {
+        return $(a).text().toUpperCase()
+            .indexOf(m[3].toUpperCase()) >= 0;
+    };
+
+
+    $(document).ready(function () {
+        // add an event listener on the tag input to show the tagcloud
+
+        $('#tagInput').focus(function () {
+            $('.tagcloud').show(300);
+        })
+
+        // add an event listener to HIDE the tagcloud when I'm not on the tag input
+        $('form *:not("#tagInput")').focus(function () {
+            if ($('.tagcloud').is(':visible')) {
+                $('.tagcloud').hide(300);
+            }
         });
 
-    </script>
+        $('#tagInput').keyup(function () {
+            // get JUST the text from the input after the last comma
+            let inputTags = $(this).val().split(','); // ['one, 'two', 'three']
 
+            // remove the last element of inputTags and trim any whitespace
+            let searchString = inputTags.pop().trim(); // ['one', 'two']
 
+            // hide all the tags which do not contain that text
+            $('.tagcloud > a:not( :contains(' + searchString + ') )').hide();
 
-    <script>
-        // override the jQuery ":contains" selector to make it case insensitive
-        jQuery.expr[':'].contains = function (a, i, m) {
-            return $(a).text().toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+            // show all the tags wich do contain that text
+            $('.tagcloud > a:contains(' + searchString + ')').show();
 
+            $('.disabledTag').removeClass('disabledTag');
 
-        $(document).ready(function () {
-            // add an event listener on the tag input to show the tagcloud
+            inputTags.forEach(tag => {
 
-            $('#tagInput').focus(function () {
-                $('.tagcloud').show(300);
-            })
-
-            // add an event listener to HIDE the tagcloud when I'm not on the tag input
-            $('form *:not("#tagInput")').focus(function () {
-                if ($('.tagcloud').is(':visible')) {
-                    $('.tagcloud').hide(300);
-                }
-            });
-
-            $('#tagInput').keyup(function () {
-                // get JUST the text from the input after the last comma
-                let inputTags = $(this).val().split(','); // ['one, 'two', 'three']
-
-                // remove the last element of inputTags and trim any whitespace
-                let searchString = inputTags.pop().trim(); // ['one', 'two']
-
-                // hide all the tags which do not contain that text
-                $('.tagcloud > a:not( :contains(' + searchString + ') )').hide();
-
-                // show all the tags wich do contain that text
-                $('.tagcloud > a:contains(' + searchString + ')').show();
-
-                $('.disabledTag').removeClass('disabledTag');
-
-                inputTags.forEach(tag => {
-
-                    if (tag.trim() == '') {
-                        return;
-                    }
-
-                    let matchingTags = $('.tagcloud > a:contains(' + tag.trim() + ')');
-
-                    matchingTags.each(function () {
-
-                        if ($(this).text().trim().toLowerCase() == tag.trim().toLowerCase()) {
-                            $(this).addClass('disabledTag');
-
-                        }
-                    });
-                });
-            });
-
-            $('.tagcloud > a').click(function () {
-
-                if ($(this).hasClass('disabledTag')) {
-                    $('#tagInput').focus();
+                if (tag.trim() == '') {
                     return;
                 }
 
-                // get the name of the bag that was clicked
+                let matchingTags = $('.tagcloud > a:contains(' + tag.trim() + ')');
 
-                let tagName = $(this).text();
+                matchingTags.each(function () {
 
-                // get the text currently in the tag input and split it up by the commas
-                let tags = $('#tagInput').val().split(',');
+                    if ($(this).text().trim().toLowerCase() == tag.trim().toLowerCase()) {
+                        $(this).addClass('disabledTag');
 
-                // remove the last  element
-                tags.pop();
-
-                // replace it with the tag that was clicked
-                tags.push(tagName);
-
-                // changethe text in the input
-                let tagsAsString = tags.map(t => t.trim()).join(', ') + ', ';
-                $('#tagInput').val(tagsAsString);
-
-                $('#tagInput').focus();
-                $('#tagInput').keyup();
+                    }
+                });
             });
-
         });
-    </script>
+
+        $('.tagcloud > a').click(function () {
+
+            if ($(this).hasClass('disabledTag')) {
+                $('#tagInput').focus();
+                return;
+            }
+
+            // get the name of the bag that was clicked
+
+            let tagName = $(this).text();
+
+            // get the text currently in the tag input and split it up by the commas
+            let tags = $('#tagInput').val().split(',');
+
+            // remove the last  element
+            tags.pop();
+
+            // replace it with the tag that was clicked
+            tags.push(tagName);
+
+            // changethe text in the input
+            let tagsAsString = tags.map(t => t.trim()).join(', ') + ', ';
+            $('#tagInput').val(tagsAsString);
+
+            $('#tagInput').focus();
+            $('#tagInput').keyup();
+        });
+
+    });
+
+</script>
 }
-
-
