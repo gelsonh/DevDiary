@@ -137,6 +137,7 @@ namespace DevDiary.Data
             }
 
         }
+      
         // Demo Users Seed Method
         private static async Task SeedDemoUsersAsync(UserManager<AppUser> userManager, IConfiguration configuration)
         {
